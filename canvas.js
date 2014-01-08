@@ -4,12 +4,11 @@ var canvasScript = function(){
 
     var pen = function(e){
 	ctx.clearRect(0,0,canvas.width,canvas.height);
-	ctx.translate(0,0);
 	ctx.beginPath();
 	ctx.setLineDash([1,1]);
-	ctx.arc(e.x,
-		e.y,
-		5,0,2*Math.PI);//x,y,radius,startAng,endAng
+	ctx.arc(e.x-10,
+		e.y-10,
+		10,0,2*Math.PI);//x,y,radius,startAng,endAng
 	ctx.stroke();
     }
 
