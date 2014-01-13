@@ -1,71 +1,66 @@
 var canvasScript = function(){
     var canvas, stage;
     var drawingCanvas;
-    var oldPt;
-    var oldMidPt;
-    var title;
+    var oldPt, oldMidPt;
     var color;
     var stroke;
-    var colors;
-    var index;
-    
-    if (window.top != window) {
-        document.getElementById("header").style.display = "none";
+    var penCursor;
+    var isPenDown;
+
+    var init = function(){
+	if (window.top != window) {
+            document.getElementById("header").style.display = "none";
+	}
+	canvas = document.getElementById("cvs");
+	
+	//check to see if we are running in a browser with touch support
+	stage = new createjs.Stage(canvas);
+	stage.autoClear = false;
+	stage.enableDOMEvents(true);
+	
+	createjs.Touch.enable(stage);
+	createjs.Ticker.setFPS(30);
+	
+	drawingCanvas = new createjs.Shape();
+	color = "#FF0000";
+	stroke = 20;
+	isPenDown = false;
+	penCursor = drawingCanvas.graphics.beginFill("#000000").drawCircle(100,100,20);
+	
+	stage.addEventListener("stagemousedown", handleMouseDown);
+	stage.addEventListener("stagemouseup", handleMouseUp);
+	stage.addEventListener("stagemousemove" , pen);
+	
+	stage.addChild(drawingCanvas);
+	stage.update();
     }
-    canvas = document.getElementById("cvs");
-    index = 0;
-    colors = ["#828b20", "#b0ac31", "#cbc53d", "#fad779", "#f9e4ad", "#faf2db", "#563512", "#9b4a0b", "#d36600", "#fe8a00", "#f9a71f"];
-    
-    //check to see if we are running in a browser with touch support
-    stage = new createjs.Stage(canvas);
-    stage.autoClear = false;
-    stage.enableDOMEvents(true);
-    
-    createjs.Touch.enable(stage);
-    createjs.Ticker.setFPS(24);
-    
-    drawingCanvas = new createjs.Shape();
-    
-    stage.addEventListener("stagemousedown", handleMouseDown);
-    stage.addEventListener("stagemouseup", handleMouseUp);
-    
-    title = new createjs.Text("Click and Drag to draw", "36px Arial", "#777777");
-    title.x = 300;
-    title.y = 200;
-    stage.addChild(title);
-    
-    stage.addChild(drawingCanvas);
-    stage.update();
 
+    //function stop() {}
 
-    function stop() {}
+    var pen = function(event) {
+	if(isPenDown){
+	    var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
+	    
+	    drawingCanvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
+	    
+            oldPt.x = stage.mouseX;
+            oldPt.y = stage.mouseY;
+	    
+            oldMidPt.x = midPt.x;
+            oldMidPt.y = midPt.y;
+	    
+            stage.update();
+	}
+    }
 
-    function handleMouseDown(event) {
-	if (stage.contains(title)) { stage.clear(); stage.removeChild(title); }
-	color = colors[(index++)%colors.length];
-	stroke = Math.random()*30 + 10 | 0;
+    var handleMouseUp = function(event) {
+	isPenDown = false;
+    }
+    var handleMouseDown = function(event) {
+	isPenDown = true;
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = oldPt;
-	stage.addEventListener("stagemousemove" , handleMouseMove);
     }
 
-    function handleMouseMove(event) {
-	var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
-
-	drawingCanvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
-
-        oldPt.x = stage.mouseX;
-        oldPt.y = stage.mouseY;
-
-        oldMidPt.x = midPt.x;
-        oldMidPt.y = midPt.y;
-
-        stage.update();
-    }
-
-    function handleMouseUp(event) {
-        stage.removeEventListener("stagemousemove" , handleMouseMove);
-    }
-
+    init();
 }();
-
