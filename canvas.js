@@ -22,35 +22,43 @@ var canvasScript = function(){
 	createjs.Ticker.setFPS(30);
 	
 	drawingCanvas = new createjs.Shape();
-	color = "#FF0000";
-	stroke = 20;
+	color = "#FF00FF";
+	stroke = 40;
 	isPenDown = false;
-	penCursor = drawingCanvas.graphics.beginFill("#000000").drawCircle(100,100,20);
-	
+	penCursor = new createjs.Shape();
+	penCursor.graphics.beginStroke("gray").drawCircle(stroke/2,stroke/2,stroke/2);
+	penCursor.cache(0,0,stroke,stroke);
+	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
+
+
 	stage.addEventListener("stagemousedown", handleMouseDown);
 	stage.addEventListener("stagemouseup", handleMouseUp);
 	stage.addEventListener("stagemousemove" , pen);
 	
 	stage.addChild(drawingCanvas);
+	stage.addChild(penCursor);
 	stage.update();
     }
 
-    //function stop() {}
 
     var pen = function(event) {
+	var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
+
 	if(isPenDown){
-	    var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
-	    
 	    drawingCanvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
 	    
-            oldPt.x = stage.mouseX;
-            oldPt.y = stage.mouseY;
-	    
-            oldMidPt.x = midPt.x;
-            oldMidPt.y = midPt.y;
-	    
-            stage.update();
 	}
+	penCursor.setTransform(stage.mouseX-stroke/2,stage.mouseY-stroke/2);
+	penCursor.updateCache('use');
+
+        oldPt.x = stage.mouseX;
+        oldPt.y = stage.mouseY;
+	
+        oldMidPt.x = midPt.x;
+        oldMidPt.y = midPt.y;
+
+
+        stage.update();
     }
 
     var handleMouseUp = function(event) {
