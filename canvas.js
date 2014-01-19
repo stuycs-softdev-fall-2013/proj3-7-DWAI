@@ -6,13 +6,14 @@ var canvasScript = function(){
     var stroke;
     var penCursor;
     var isPenDown;
+    var path;
 
     var init = function(){
 	if (window.top != window) {
             document.getElementById("header").style.display = "none";
 	}
 	canvas = document.getElementById("cvs");
-	
+	canvas.style.cursor="help";
 	//check to see if we are running in a browser with touch support
 	stage = new createjs.Stage(canvas);
 	stage.autoClear = false;
@@ -23,12 +24,13 @@ var canvasScript = function(){
 	
 	drawingCanvas = new createjs.Shape();
 	color = "#FF00FF";
-	stroke = 40;
+	stroke = 10;
 	isPenDown = false;
-	penCursor = new createjs.Shape();
-	penCursor.graphics.beginStroke("gray").drawCircle(stroke/2,stroke/2,stroke/2);
-	penCursor.cache(0,0,stroke,stroke);
+//	penCursor = new createjs.Shape();
+//	penCursor.graphics.beginStroke("gray").drawCircle(stroke/2,stroke/2,stroke/2);
+//	penCursor.cache(0,0,stroke,stroke);
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
+	oldMidPt = new createjs.Point(stage.mouseX, stage.mouseY);
 
 
 	stage.addEventListener("stagemousedown", handleMouseDown);
@@ -43,13 +45,13 @@ var canvasScript = function(){
 
     var pen = function(event) {
 	var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
-
+	
 	if(isPenDown){
 	    drawingCanvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
-	    
+	    path.push(midPt);
 	}
-	penCursor.setTransform(stage.mouseX-stroke/2,stage.mouseY-stroke/2);
-	penCursor.updateCache('use');
+//	penCursor.setTransform(stage.mouseX-stroke/2,stage.mouseY-stroke/2);
+//	penCursor.updateCache('use');
 
         oldPt.x = stage.mouseX;
         oldPt.y = stage.mouseY;
@@ -63,8 +65,10 @@ var canvasScript = function(){
 
     var handleMouseUp = function(event) {
 	isPenDown = false;
+	console.log(path);
     }
     var handleMouseDown = function(event) {
+	path = [];
 	isPenDown = true;
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = oldPt;
