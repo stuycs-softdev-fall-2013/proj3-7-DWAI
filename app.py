@@ -11,7 +11,7 @@ def home():
     else:
         render_template('home.html', use = None)
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
     if 'username' in session: 
         return redirect(url_for('home'))
@@ -24,7 +24,7 @@ def login():
         return redirect(url_for('home'))
     return render_template('login.html', message = 'Invalid username and password combination')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if 'username' in session:
         return redirect(url_for('home'))
@@ -39,6 +39,21 @@ def register():
     if password != cpassword:
         return render_template('register.html', message = 'Passwords do not match')
     auth.addUser(username, password)
+    return redirect(url_for('home'))
+
+@app.route('/changepass', methods=['GET', 'POST'])
+def changepass():
+    if 'username' in session:
+        if request.method == 'GET':
+            return render_template('changepass.html')
+        else:
+            username = request.form['Username']
+            password = request.form['Password']
+            cpassword = request.form['CPassowrd']
+            if auth.auth(username, password):
+                auth.change(username,cpassword)
+                return render_template('changepass.html', message = 'Successfully changed password')
+            return render_template('changepass.html', message = 'Sorry, but the username and password combination was invalid')
     return redirect(url_for('home'))
 
 @app.route('/logout')
