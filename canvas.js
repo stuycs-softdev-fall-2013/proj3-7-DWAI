@@ -82,7 +82,7 @@ var canvasScript = function(){
     var drawPath = function(strokeToDraw){
 	drawingCanvas.graphics.clear().setStrokeStyle(strokeToDraw.pensize, 'round', 'round').beginStroke(strokeToDraw.color);
 	var path = strokeToDraw.path;
-	for(var i = 1;i < strokeToDraw.path.length-1;i++){
+	for(var i = 1;i < strokeToDraw.path.length;i++){
 	    drawingCanvas.graphics.moveTo(path[i].x,path[i].y).curveTo(path[i].x,path[i].y,path[i-1].x,path[i-1].y);
 	    stage.update();
 	}
