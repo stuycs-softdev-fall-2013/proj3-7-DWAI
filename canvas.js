@@ -6,7 +6,8 @@ var canvasScript = function(){
     var stroke;
     var penCursor;
     var isPenDown;
-    var path;
+    var currentPath;
+    var strokes;
 
     var init = function(){
 	if (window.top != window) {
@@ -24,8 +25,9 @@ var canvasScript = function(){
 	
 	drawingCanvas = new createjs.Shape();
 	color = "#FF00FF";
-	stroke = 10;
+	penWidth = 10;
 	isPenDown = false;
+	strokes=[];
 //	penCursor = new createjs.Shape();
 //	penCursor.graphics.beginStroke("gray").drawCircle(stroke/2,stroke/2,stroke/2);
 //	penCursor.cache(0,0,stroke,stroke);
@@ -47,8 +49,8 @@ var canvasScript = function(){
 	var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
 	
 	if(isPenDown){
-	    drawingCanvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
-	    path.push(midPt);
+	    drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
+	    currentPath.push(midPt);
 	}
 //	penCursor.setTransform(stage.mouseX-stroke/2,stage.mouseY-stroke/2);
 //	penCursor.updateCache('use');
@@ -63,16 +65,48 @@ var canvasScript = function(){
         stage.update();
     }
 
-    var handleMouseUp = function(event) {
+    var handleMouseUp = function() {
 	isPenDown = false;
-	console.log(path);
+	strokes.push({
+	    pensize: penWidth,
+	    color: color,
+	    path: currentPath
+	});
     }
-    var handleMouseDown = function(event) {
-	path = [];
+    var handleMouseDown = function() {
+	currentPath = [];
 	isPenDown = true;
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = oldPt;
     }
-
-    init();
+    var drawPath = function(strokeToDraw){
+	drawingCanvas.graphics.clear().setStrokeStyle(strokeToDraw.pensize, 'round', 'round').beginStroke(strokeToDraw.color);
+	var path = strokeToDraw.path;
+	for(var i = 1;i < strokeToDraw.path.length-1;i++){
+	    drawingCanvas.graphics.moveTo(path[i].x,path[i].y).curveTo(path[i].x,path[i].y,path[i-1].x,path[i-1].y);
+	    stage.update();
+	}
+    }
+    var redrawAll = function(strokes){
+	stage.clear();
+	for(var i = 0;i < strokes.length;i++){
+	    drawPath(strokes[i]);
+	}
+	stage.update();
+    }
+    var undo = function(){
+	console.log("Before undo: "+strokes);
+	undostroke = strokes.pop();
+	console.log("After undo: "+strokes);
+	redrawAll(strokes);
+    }
+    
+    return{
+	init:init,
+	handleMouseDown:handleMouseDown,
+	handleMouseUp:handleMouseUp,
+	undo:undo,
+    }
 }();
+
+canvasScript.init();
