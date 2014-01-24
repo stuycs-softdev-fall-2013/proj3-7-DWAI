@@ -1,3 +1,5 @@
+<!--{% extends "layout.html" %}-->
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -67,95 +69,120 @@
 	    <button type="submit" class="btn btn-success">Sign in</button>
 	    <button type="default" class="btn btn-default">Register</button>
 	  </form>
-<!--
-	  {% else %}
-	  <ul class="nav navbar-right">
-	    <li><a href="#logout">Logout</a></li>
-	    <li><a href="#settings">Settings</a></li>
-	  </ul>
-	  {% endif %}
--->
+	  <!--
+	      {% else %}
+	      <ul class="nav navbar-right">
+		<li><a href="#logout">Logout</a></li>
+		<li><a href="#settings">Settings</a></li>
+	      </ul>
+	      {% endif %}
+	      -->
 	</div><!-- /.nav-collapse -->    
       </div><!-- /.container -->
     </div><!-- /.navbar -->
-	     
-    <div class="container">
-      
-      <div class="row row-offcanvas row-offcanvas-right">
-
-        <div class="col-xs-12 col-sm-9">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-          </p>
-          <div class="jumbotron">
-            <h1>Get started!</h1>
-	    <p>Go straight to a blank canvas!</p>
-          </div>
-          <div class="row">
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-	      <p>pic here</p>
-              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>pic here</p>
-              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>pic here</p>
-              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>pic here</p>
-              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>pic here</p>
-              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>pic here</p>
-              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div><!--/span-->
-          </div><!--/row-->
-        </div><!--/span-->
-
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-	    <a href="#" class="list-group-item">Link</a>
-	    <a href="#" class="list-group-item">Link</a>
-	    <a href="#" class="list-group-item">Link</a>
-	    <a href="#" class="list-group-item">Link</a>
-	    <a href="#" class="list-group-item">Link</a>
-          </div>
-        </div><!--/span-->
-      </div><!--/row-->
-
-      <hr>
-
-      <footer>
-        <p>© Software Development 2013-2014</p>
-	<p>Alvin Leung, Vivian Wang, Michele Lin, Judy Mai</p>
-      </footer>
-
-    </div><!--/.container-->
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./Off Canvas Template for Bootstrap_files/jquery-1.10.2.min.js"></script>
-    <script src="./Off Canvas Template for Bootstrap_files/bootstrap.min.js"></script>
-    <script src="./Off Canvas Template for Bootstrap_files/offcanvas.js"></script>
-  
   </body>
+
+  <div class="container">
+    
+    <div class="row row-offcanvas row-offcanvas-right">
+      
+      <div class="col-xs-12 col-sm-9">
+	<p class="pull-right visible-xs">
+          <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+	</p>
+	<div class="jumbotron">
+          <h1>Get started!</h1>
+	  <p>Go straight to a blank canvas!</p>
+	  <!--<p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>-->
+
+	  <!-- Button trigger modal -->
+	  <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#myModal">Blank canvas &raquo;</a></p>
+
+	  <!-- Modal -->
+	  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		  <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		</div>
+		<div class="modal-body">
+		  ...
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-primary">Save changes</button>
+		</div>
+	      </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	  </div><!-- /.modal -->
+	</div>
+
+	<div class="row">
+          <div class="col-6 col-sm-6 col-lg-4">
+            <h2>Heading</h2>
+	    <p>pic here</p>
+            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          </div><!--/span-->
+          <div class="col-6 col-sm-6 col-lg-4">
+            <h2>Heading</h2>
+            <p>pic here</p>
+            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          </div><!--/span-->
+          <div class="col-6 col-sm-6 col-lg-4">
+            <h2>Heading</h2>
+            <p>pic here</p>
+            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          </div><!--/span-->
+          <div class="col-6 col-sm-6 col-lg-4">
+            <h2>Heading</h2>
+            <p>pic here</p>
+            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          </div><!--/span-->
+          <div class="col-6 col-sm-6 col-lg-4">
+            <h2>Heading</h2>
+            <p>pic here</p>
+            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          </div><!--/span-->
+          <div class="col-6 col-sm-6 col-lg-4">
+            <h2>Heading</h2>
+            <p>pic here</p>
+            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          </div><!--/span-->
+        </div><!--/row-->
+      </div><!--/span-->
+
+      <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div class="list-group">
+          <a href="#" class="list-group-item active">Link</a>
+          <a href="#" class="list-group-item">Link</a>
+          <a href="#" class="list-group-item">Link</a>
+          <a href="#" class="list-group-item">Link</a>
+          <a href="#" class="list-group-item">Link</a>
+	  <a href="#" class="list-group-item">Link</a>
+	  <a href="#" class="list-group-item">Link</a>
+	  <a href="#" class="list-group-item">Link</a>
+	  <a href="#" class="list-group-item">Link</a>
+	  <a href="#" class="list-group-item">Link</a>
+        </div>
+      </div><!--/span-->
+    </div><!--/row-->
+ 
+    <hr>
+
+    <footer>
+      <p>© Software Development 2013-2014</p>
+      <p>Alvin Leung, Vivian Wang, Michele Lin, Judy Mai</p>
+    </footer>
+
+  </div><!--/.container-->
+
+  <!-- Bootstrap core JavaScript
+       ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="./Off Canvas Template for Bootstrap_files/jquery-1.10.2.min.js"></script>
+  <script src="./Off Canvas Template for Bootstrap_files/bootstrap.min.js"></script>
+  <script src="./Off Canvas Template for Bootstrap_files/offcanvas.js"></script>
+  
+</body>
 </html>
