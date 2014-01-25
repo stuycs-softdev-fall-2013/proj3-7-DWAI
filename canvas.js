@@ -8,6 +8,7 @@ var canvasScript = function(){
     var isPenDown;
     var currentPath;
     var strokes;
+    var redoStack;
 
     var init = function(){
 	if (window.top != window) {
@@ -28,6 +29,7 @@ var canvasScript = function(){
 	penWidth = 10;
 	isPenDown = false;
 	strokes=[];
+	redoStack = [];
 //	penCursor = new createjs.Shape();
 //	penCursor.graphics.beginStroke("gray").drawCircle(stroke/2,stroke/2,stroke/2);
 //	penCursor.cache(0,0,stroke,stroke);
@@ -75,6 +77,7 @@ var canvasScript = function(){
     }
     var handleMouseDown = function() {
 	currentPath = [];
+	redoStack = [];
 	isPenDown = true;
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = oldPt;
@@ -95,17 +98,26 @@ var canvasScript = function(){
 	stage.update();
     }
     var undo = function(){
-	console.log("Before undo: "+strokes);
 	undostroke = strokes.pop();
-	console.log("After undo: "+strokes);
 	redrawAll(strokes);
+	redoStack.push(undostroke);
     }
+    var redo = function(){
+	var redostroke = redoStack.pop();
+	if(redostroke){
+	    strokes.push(redostroke);
+	    redrawAll(strokes);
+	}
+    }
+
+    
     
     return{
 	init:init,
 	handleMouseDown:handleMouseDown,
 	handleMouseUp:handleMouseUp,
 	undo:undo,
+	redo:redo
     }
 }();
 
