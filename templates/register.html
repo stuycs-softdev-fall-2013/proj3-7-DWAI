@@ -1,27 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="http://getbootstrap.com/docs-assets/ico/favicon.png">
+{% extends "layout.html" %}
 
-    <title>Register</title>
-
+{% block head %}
     <!-- Bootstrap core CSS -->
     <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet"> 
-  </head>
+{% endblock %}
+
+
+  <center>
+    <br>
+    {% if error is defined %}
+    <font color=red>{{error}}</font>
+    {% endif %}
+    <br>
+  </center>
+
+
+  {% block body %}
 
   <body>
 
     <div class="container">
       
-      <form class="form-signin" role="form">
+      <form method="POST" class="form-signin" role="form">
         <h2 class="form-signin-heading">Please fill in</h2>
         <input type="text" class="form-control" id="user" name="username" placeholder="Username" required autofocus>
         <input type="password" class="form-control" id="pw" name="password" placeholder="Password" required>
@@ -32,4 +35,12 @@
     </div> <!-- /container -->
 
   </body>
+
+
+  <center>
+  <h5>Already have an account? <a href="{{ url_for('login')">Login here</a></h5>
+  </center>
+
+  {% endblock %}
+
 </html>

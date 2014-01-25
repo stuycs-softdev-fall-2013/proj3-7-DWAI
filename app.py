@@ -4,13 +4,16 @@ import json
 
 
 app = Flask(__name__)
-app.secret_key = "SECRET_KEY"
+app.secret_key = "my secret key"
 
 
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
     if not 'username' in session:
-        return render_template('index.html', user=None)
+        return render_template('index.html', user="username")
     else:
         user = users.find_one(username=session['username'])
         return render_template('index.html', user=user)
@@ -54,7 +57,6 @@ def logout():
     return redirect(url_for('home'))
 
 
-# For the user to change personal information
 @app.route('/changeinfo', methods=['GET', 'POST'])
 def changeinfo():
     if 'username' not in session:
