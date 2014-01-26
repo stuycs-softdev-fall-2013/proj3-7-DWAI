@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
+    <!-- Documentation extras -->
+    <link href="http://getbootstrap.com/docs-assets/css/docs.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/docs-assets/css/pygments-manni.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<h1>{{user}} 's PROFILE</h1>
+<!--
+<img src="..." alt="..." class="img-rounded">
+<img src="..." alt="..." class="img-circle">
+-->
+<br>
+<h3>Profile Pic?</h3>
+<img data-src="holder.js/140x140" class="img-rounded">
+<img data-src="holder.js/140x140" class="img-circle">
+
+<br>
+<br>
+
+<h2>GALLERY</h2>
+<img data-src="holder.js/140x140" class="img-thumbnail">
+<img data-src="holder.js/140x140" class="img-thumbnail">
+<img data-src="holder.js/140x140" class="img-thumbnail">
+<img data-src="holder.js/140x140" class="img-thumbnail">
+
+{% endblock %}
