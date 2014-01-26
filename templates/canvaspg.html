@@ -5,7 +5,23 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">  
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/navbar/navbar.css" rel="stylesheet">
+
+<!--
+    
+    <script type="text/javascript">
+      function printValue(sliderID, textbox){
+      var x = document.getElementById(textbox);
+      var y = document.getElementById(sliderOD);
+      x.value = y.value;
+      }
+      
+      window.onload = function() { printValue('penslider', 'rangeValue); }
+    </script>
+-->
+
 {% endblock %}
+
+
 
 {% block body %}
     <br>
@@ -23,33 +39,41 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#undo">Undo</a></li>
-            <li><a href="#redo">Redo</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Canvas Size</a></li>
-                <li><a href="#">Pen Size</a></li>
-                <li><a href="#">Pen Color</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Brush Tools</li>
-                <li><a href="#">Pick color</a></li>
-              </ul>
-            </li>
-          </ul>
+	    <form class="navbar-form">
+	      <button type="button" class="btn btn-default" id="undo">Undo</button>
+	      <button type="button" class="btn btn-default" id="redo">Redo</button>
+              <div class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+                  <li><a href="#">Canvas Size</a></li>
+                  <li><a href="#">Pen Size</a></li>
+                  <li><a href="#">Pen Color</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Brush Tools</li>
+                  <li><a href="#">Pick color</a></li>
+		</ul>
+              </div>
+	      <input type="color" name="pencolor"><input type="submit">
+	      Pen size: <input id="penslide" type="range" name="pensize" min="1" max="100" value="50"/> 
+			       <!--onchange="printValue('penslide', 'rangeValue')"-->
+	      <input id="rangeValue" type="text" size="3" value="penslide.value"/>
+	      <input type="submit"/>
+	    </form>
+	  </ul> <!-- navbar -->
 
-	  <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#save">Save</a></li>
-          </ul>
+	  <form class="nav navbar-nav navbar-right">
+            <button type="button" class="btn btn-success" id="save">Save</button>
+          </form>
+
         </div><!--/.nav-collapse -->
       </div>
 
 
 
-<center>
-      <canvas id="cvs" width="1000" height="500" style="border:1px solid #d3d3d3;">
-	Your browser does not support the HTML5 canvas tag.</canvas>
-</center>
+      <center>
+	<canvas id="cvs" width="1000" height="500" style="border:1px solid #d3d3d3;">
+	  Your browser does not support the HTML5 canvas tag.</canvas>
+      </center>
 
 
 
