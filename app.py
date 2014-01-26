@@ -16,7 +16,7 @@ def home():
             session['username'] = username
             return render_template('index.html', user = username)
         else:
-            return render_template('login.html', user = None, message = 'Invalid username and password combination')
+            return render_template('login.html', user = None, error = 'Invalid username and password combination')
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
@@ -90,7 +90,9 @@ def changeinfo():
 def profile():
     #show the user profile for that user
     if 'username' in session:
-        return render_template('profile.html')
+        return render_template('profile.html', user = session['username'])
+    else:
+        return redirect(url_for('home'))
 
 @app.route('/canvas')
 def canvas():
