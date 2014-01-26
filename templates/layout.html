@@ -50,9 +50,8 @@
             <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 	      <ul class="dropdown-menu">
-		<li><a href="#">I just</a></li>
-		<li><a href="#">Felt like</a></li>
-		<li><a href="#">Putting this</a></li>
+		<li><a href="./login">Login</a></li>
+		<li><a href="./register">Register</a></li>
 		<li class="divider"></li>
 		<li class="dropdown-header">Header</li>
 		<li><a href="#">Here</a></li>
@@ -70,7 +69,7 @@
 	      <input type="password" placeholder="Password" class="form-control">
 	    </div>
 	    <button type="submit" class="btn btn-success">Sign in</button>
-	    <button type="default" class="btn btn-default">Register</button>
+	    <button type="button" class="btn btn-default" onClick="window.location.href='/register'">Register</button>
 	  </form>
 	  {% else %}
 	  <ul class="nav navbar-right">
@@ -93,15 +92,15 @@
     <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	        <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
-
+	    <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
+	    
   </body>
 
  <hr>
 
-    <footer>
-      <p>© Software Development 2013-2014</p>
-      <p>Alvin Leung, Vivian Wang, Michele Lin, Judy Mai</p>
-    </footer>
+ <footer>
+   <p>© Software Development 2013-2014</p>
+   <p>Alvin Leung, Vivian Wang, Michele Lin, Judy Mai</p>
+ </footer>
 
  </html>
