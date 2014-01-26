@@ -1,18 +1,28 @@
 from pymongo import MongoClient
-
 client = MongoClient()
-db = client['logins']
+db = client.database
 
-def addUser(username,password):
-    db.users.insert({'username': username, 'passowrd': password})
+def adduser(username, password):
+        u = db.login.find_one({'username':username})
+        if u is None:
+                db.login.insert({'username':username,'password':password})
+                return True
+        return False
 
-def exists(username):
-    user = db.users.find({'username': username}, fields = {'_id': False})
-    return len([user for user in users]) != 0
+def authenticate(username, password):
+        u = db.login.find_one({'username':username})
+        if u is None:
+                return False
+        return u['password'] == password
 
-def auth(username,password):
-    user = db.users.find({'username': username, 'password': password}, fields = {'_id': False})
-    return len([user for user in users]) != 0
+def changepass(username, old, new):
+        if authenticate(username, old):
+                db.login.update({'username':username}, {'$set':{'password':new}})
+                return True
+	return False
 
-def change(username, npassword):
-    db.users.update({'username': username}, {'%set': {'password': npassword}})
+def changeuser(password, old, new):
+	if authenticate(old, password):
+		db.login.update({'username':old}, {'$set':{'username':new}})
+		return True
+	return False

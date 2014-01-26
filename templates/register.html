@@ -9,15 +9,6 @@
 {% endblock %}
 
 
-  <center>
-    <br>
-    {% if error is defined %}
-    <font color=red>{{error}}</font>
-    {% endif %}
-    <br>
-  </center>
-
-
   {% block body %}
 
   <body>
@@ -43,9 +34,19 @@
 
 
   <center>
-  <h5>Already have an account? <a href="{{ url_for('login')">Login here</a></h5>
+  <h5>Already have an account? <a href="{{ url_for('login')}}">Login here</a></h5>
   </center>
 
+  <center>
+    <br>
+    {% if error is defined %}
+    <font color=red>{{error}}</font>
+    {% endif %}
+    <br>
+  </center>
+
+
   {% endblock %}
+
 
 </html>

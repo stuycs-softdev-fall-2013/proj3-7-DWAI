@@ -31,15 +31,12 @@ def register():
         return redirect(url_for('home'))
     if request.method == 'GET':
         return render_template('register.html')
-    if users.exists(request.form['username']):
-        return render_template('register.html', error='Username already exists')
     if request.form['password'] != request.form['confirm']:
         return render_template('register.html', error='Passwords do not match')
+    if not auth.adduser(request.form['username'],request.form['password']):
+	return render_template('register.html', error='Username already exists')
     session['username'] = request.form['username']
-    users.insert(username=request.form['username'],
-            password=request.form['password'])
     return redirect(url_for('home'))
-
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -47,12 +44,11 @@ def login():
         return redirect(url_for('home'))
     if request.method == 'GET':
         return render_template('login.html')
-    username = request.form['Username']
-    password = request.form['Password']
-    if auth.auth(username, password):
-        session['username'] = username
-        return redirect(url_for('home'))
-    return render_template('login.html', error = 'Invalid combo')
+    if not auth.authenticate(request.form['username'],request.form['password']):
+        return render_template('login.html',
+                error='Incorrect username or password')
+    session['username'] = request.form['username']
+    return redirect(url_for('home'))
 
 
 @app.route('/logout')
@@ -68,29 +64,28 @@ def changeinfo():
         return redirect(url_for('home'))
     if request.method == 'GET':
         return render_template('changeinfo.html',user=session['username'])
-    u = users.find_one(username=session['username'])
-    error = None
     usererror = None
     passerror = None
     usersuccess = None
     pwsuccess = None
-    if u.password == request.form['oldpw']:
-        if request.form['newuser']:
-            if not u.change_username(request.form['oldpw'],
-                    request.form['newuser']):
-                usererror = 'Username change unsuccessful.'
-            else:
-                session['username'] = request.form['newuser']
-                usersuccess = 'Username successfully changed to: ' + request.form['newuser']
-        if request.form['newpw']:
-            if not u.change_password(request.form['oldpw'], request.form['newpw'],
-                    request.form['confirm']):
-                passerror= 'Passwords do not match.'
-            else:
-                pwsuccess= 'Password successfully changed.'
-    else:
-        error = 'Incorrect password'
-    return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
+    if request.form['newuser']:
+        if not auth.changeuser(request.form['oldpw'],
+		session['username'],
+                request.form['newuser']):
+            usererror = 'Username change unsuccessful. Check your password.'
+        else:
+            session['username'] = request.form['newuser']
+            usersuccess = 'Username successfully changed to: ' + request.form['newuser']
+    if request.form['newpw']:
+	if request.form['newpw'] != request.form['confirm']:
+	    passerror = 'Passwords do not match.'
+        elif not auth.changepass(session['username'],
+		request.form['oldpw'],
+		request.form['newpw']):
+	    passerror = 'Password change unsuccessful. Check your password.'
+	else:
+            pwsuccess= 'Password successfully changed.'
+    return render_template('changeinfo.html', user=session['username'],usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
 
 if __name__ == '__main__':

@@ -7,9 +7,6 @@
 <form method="POST">
   <h3>Please enter your current password to make any changes.</h3>
   <b>Current password</b> <input type="password" name="oldpw"> 
-  {% if error %}
-    <font color=red><sub>{{error}}</sub></font>
-  {% endif %}
 
   <br>
   <br>
@@ -23,19 +20,25 @@
       {% if usererror %}
         <font color=red><sub>{{usererror}}</sub></font></td>
       {% endif %}
+      {% if usersuccess %}
+	<font color=green><sub>{{usersuccess}}</sub></font></td>
+      {% endif %}
     </tr>
 
     <tr class="active">
       <th>Change password</th>
       <td><input type="password" name="newpw"></td>
+      {% if passerror %}
+        <font color=red><sub>{{passerror}}</sub></font></td>
+      {% endif %}
+      {% if passsuccess %}
+	<font color=green><sub>{{passsuccess}}</sub></font></td>
+      {% endif %}
     </tr>
 
     <tr class="active">
       <th>Verify new password</th>
       <td><input type="password" name="confirm"> 
-      {% if passerror %}
-        <font color=red><sub>{{passerror}}</sub></font></td>
-      {% endif %}
    </tr>
 
     <tr class="active">
