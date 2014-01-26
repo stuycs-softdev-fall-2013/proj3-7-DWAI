@@ -10,7 +10,6 @@ app.secret_key = "my secret key"
 
 
 @app.route('/', methods = ['GET', 'POST'])
-@app.route('/home', methods = ['GET', 'POST'])
 def home():
     if request.method == 'POST':
         username = request.form['Username']
@@ -19,7 +18,7 @@ def home():
             session['username'] = username
             return render_template('index.html', user = username)
         else:
-            return render_template('login.html', user = None, message = 'Invalid username and password combination')
+            return render_template('login.html', user = None, error = 'Invalid username and password combination')
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
@@ -91,10 +90,13 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
-@app.route('/user/<username>')
-def show_user_profile(usernname):
+@app.route('/profile')
+def profile():
     #show the user profile for that user
-    pass
+    if 'username' in session:
+        return render_template('profile.html', user = session['username'])
+    else:
+        return redirect(url_for('home'))
 
 @app.route('/canvas')
 def canvas():
