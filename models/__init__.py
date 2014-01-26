@@ -1,5 +1,5 @@
 # imports from this directory
-from models.review import Review
+from models.comment import Comment
 from models.tag import Tag
 from models.user import User
 from models.base import Collection
