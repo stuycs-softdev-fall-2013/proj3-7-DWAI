@@ -9,10 +9,6 @@ app.secret_key = "my secret key"
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        return render_template('login.html')
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
@@ -88,6 +84,14 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
+@app.route('/user/<username>')
+def show_user_profile(usernname):
+    #show the user profile for that user
+    pass
+
+@app.route('/canvas')
+def canvas():
+    return render_template('canvaspg.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

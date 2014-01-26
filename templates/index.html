@@ -30,14 +30,15 @@
 	      <div class="modal-content">
 		<div class="modal-header">
 		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		  <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		  <h4 class="modal-title" id="myModalLabel">Canvas</h4>
 		</div>
 		<div class="modal-body">
-		  ...
+		  Canvas size: 
+		  <input id="length" type="text" size="8" class="form-control" value="1000"> x <input id="width" type="text" size="8" class="form-control" value="1000">
 		</div>
 		<div class="modal-footer">
 		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		  <button type="button" class="btn btn-primary">Save changes</button>
+		  <button type="button" id="create" class="btn btn-primary" onClick="window.location.href='/canvas'">Create</button>
 		</div>
 	      </div><!-- /.modal-content -->
 	    </div><!-- /.modal-dialog -->
@@ -93,13 +94,8 @@
         </div>
       </div><!--/span-->
     </div><!--/row-->
- 
-    <hr>
+ {% endblock %}  
 
-    <footer>
-      <p>© Software Development 2013-2014</p>
-      <p>Alvin Leung, Vivian Wang, Michele Lin, Judy Mai</p>
-    </footer>
   
   <!-- Bootstrap core JavaScript
        ================================================== -->
@@ -108,5 +104,4 @@
   <script src="./Off Canvas Template for Bootstrap_files/bootstrap.min.js"></script>
   <script src="./Off Canvas Template for Bootstrap_files/offcanvas.js"></script>
 
-{% endblock %}  
-</html>
+

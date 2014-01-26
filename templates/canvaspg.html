@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
+  
+    <!-- Custom styles for this template -->
+    <link href="navbar.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+      <!-- Static navbar -->
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#undo">Undo</a></li>
+            <li><a href="#redo">Redo</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Canvas Size</a></li>
+                <li><a href="#">Pen Size</a></li>
+                <li><a href="#">Pen Color</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Brush Tools</li>
+                <li><a href="#">Pick color</a></li>
+              </ul>
+            </li>
+          </ul>
+
+	  <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#save">Save</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+
+
+
+
+      <canvas id="cvs" width="1000" height="1000" style="border:1px solid #d3d3d3;">
+	Your browser does not support the HTML5 canvas tag.</canvas>
+
+
+
+
+
+      <!-- Bootstrap core JavaScript & Canvas 
+	   ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+      
+      <script type="text/javascript" src="../static/js/easeljs-0.7.1.min.js"></script>
+      <script type="text/javascript" src="../static/js/canvas.js"></script>  
+      {% endblock %}
+      
+</html>
