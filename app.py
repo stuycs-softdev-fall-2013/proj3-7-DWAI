@@ -13,15 +13,15 @@ def home():
     if request.method == 'POST':
         username = request.form['Username']
         password = request.form['Password']
-        if auth.auth(username,password):
+        if auth.authenticate(username,password):
             session['username'] = username
-            return render_template('register.html', user = username)
+            return render_template('index.html', user = username)
         else:
             return render_template('login.html', user = None, message = 'Invalid username and password combination')
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
-        user = users.find_one(username=session['username'])
+        user = session['username'])
         return render_template('index.html', user=user)
 
 
@@ -46,7 +46,7 @@ def login():
         return render_template('login.html')
     if not auth.authenticate(request.form['username'],request.form['password']):
         return render_template('login.html',
-                error='Incorrect username or password')
+                error='Invalid username and password combination')
     session['username'] = request.form['username']
     return redirect(url_for('home'))
 
@@ -87,6 +87,14 @@ def changeinfo():
             pwsuccess= 'Password successfully changed.'
     return render_template('changeinfo.html', user=session['username'],usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
+@app.route('/user/<username>')
+def show_user_profile(usernname):
+    #show the user profile for that user
+    pass
+
+@app.route('/canvas')
+def canvas():
+    return render_template('canvaspg.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

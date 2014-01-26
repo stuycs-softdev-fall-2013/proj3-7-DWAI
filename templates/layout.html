@@ -45,17 +45,16 @@
 	<div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">  
 	  <ul class="nav navbar-nav">
 	    <!-- HOME ABOUT CONTACT -->
-            <li class="active"><a href="./home">Home</a></li>
+            <li class="active"><a href="./">Home</a></li>
             	    <li><a href="./canvas">Canvas</a></li>
             <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 	      <ul class="dropdown-menu">
-		<li><a href="#">I just</a></li>
-		<li><a href="#">Felt like</a></li>
-		<li><a href="#">Putting this</a></li>
+		<li><a href="./login">Login</a></li>
+		<li><a href="./register">Register</a></li>
 		<li class="divider"></li>
-		<li class="dropdown-header">Header</li>
-		<li><a href="#">Here</a></li>
+		<li class="dropdown-header">Settings</li>
+		<li><a href="./changeinfo">Change Info</a></li>
 	      </ul>
 	    </li>
           </ul>
@@ -70,7 +69,7 @@
 	      <input type="password" placeholder="Password" id="Password" class="form-control">
 	    </div>
 	    <button type="submit" class="btn btn-success">Sign in</button>
-<!--	    <button type="default" class="btn btn-default">Register</button>-->
+	    <button type="button" class="btn btn-default" onClick="window.location.href='/register'">Register</button>
 	  </form>
 	  {% else %}
 	  <ul class="nav navbar-right">
@@ -93,7 +92,15 @@
     <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	        <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
-
+	    <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
+	    
   </body>
+
+ <hr>
+
+ <footer>
+   <p>© Software Development 2013-2014</p>
+   <p>Alvin Leung, Vivian Wang, Michele Lin, Judy Mai</p>
+ </footer>
+
  </html>
