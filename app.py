@@ -11,13 +11,13 @@ app.secret_key = "my secret key"
 @app.route('/home', methods = ['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form['Username']
+        password = request.form['Password']
         if auth.auth(username,password):
             session['username'] = username
-            return render_template('index.html', user = username)
+            return render_template('register.html', user = username)
         else:
-            return render_template('index.html', user = None, message = 'Invalid username and password combination')
+            return render_template('login.html', user = None, message = 'Invalid username and password combination')
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
@@ -47,13 +47,12 @@ def login():
         return redirect(url_for('home'))
     if request.method == 'GET':
         return render_template('login.html')
-    u = users.find_one(username=request.form['username'],
-            password=request.form['password'])
-    if not u:
-        return render_template('login.html',
-                error='Incorrect username or password')
-    session['username'] = request.form['username']
-    return redirect(url_for('home'))
+    username = request.form['Username']
+    password = request.form['Password']
+    if auth.auth(username, password):
+        session['username'] = username
+        return redirect(url_for('home'))
+    return render_template('login.html', error = 'Invalid combo')
 
 
 @app.route('/logout')
