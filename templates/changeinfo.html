@@ -8,6 +8,10 @@
   <h3>Please enter your current password to make any changes.</h3>
   <b>Current password</b> <input type="password" name="oldpw"> 
 
+  {% if error %}
+  <font color=red><sub>{{error}}</sub></font></td>
+  {% endif %}
+
   <br>
   <br>
 
