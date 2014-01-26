@@ -21,7 +21,7 @@ def home():
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
-        user = session['username'])
+        user = session['username']
         return render_template('index.html', user=user)
 
 
