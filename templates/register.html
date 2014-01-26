@@ -26,10 +26,15 @@
       
       <form method="POST" class="form-signin" role="form">
         <h2 class="form-signin-heading">Please fill in</h2>
-        <input type="text" class="form-control" id="user" name="username" placeholder="Username" required autofocus>
+	
+	<input type="text" class="form-control" id="user" name="username" placeholder="Username" required autofocus>
         <input type="password" class="form-control" id="pw" name="password" placeholder="Password" required>
         <input type="password" class="form-control" id="pw2" name="confirm" placeholder="Verify Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        	
+	<div class="form-controls">
+	<button type="submit" name="button" class="btn btn-lg btn-primary" value="Register">Register</button>
+	<button type="reset" name="button" class="btn btn-lg" value="Cancel">Cancel</button>
+	</div>
       </form>
 
     </div> <!-- /container -->

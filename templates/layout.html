@@ -20,8 +20,8 @@
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template 
-    <link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet"> -->
+    <!-- Custom styles for this template-->
+    <link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet"> 
     <link href="jumbotron.css" rel="stylesheet">
     {% block head %} {% endblock %}
   </head>
@@ -31,6 +31,7 @@
     <!-- Fixed navbar -->
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
+
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -38,14 +39,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Google Paint</a>
+          <a href="./" class="navbar-brand" >Google Paint</a>
         </div>
-	<div class="collapse navbar-collapse">  	
+
+	<div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">  
 	  <ul class="nav navbar-nav">
 	    <!-- HOME ABOUT CONTACT -->
-            <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-	    <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li class="active"><a href="./home">Home</a></li>
+            	    <li><a href="./canvas">Canvas</a></li>
             <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 	      <ul class="dropdown-menu">
@@ -53,7 +54,7 @@
 		<li><a href="#">Felt like</a></li>
 		<li><a href="#">Putting this</a></li>
 		<li class="divider"></li>
-		<!-- <li class="dropdown-header">Header</li> -->
+		<li class="dropdown-header">Header</li>
 		<li><a href="#">Here</a></li>
 	      </ul>
 	    </li>
@@ -71,21 +72,28 @@
 	    <button type="submit" class="btn btn-success">Sign in</button>
 	    <button type="default" class="btn btn-default">Register</button>
 	  </form>
-
 	  {% else %}
 	  <ul class="nav navbar-right">
 	    <li><a href="{{ url_for('logout') }}">Logout</a></li>
 	    <li><a href="{{ url_for('changeinfo') }}">Settings</a></li>
 	  </ul>
 	  {% endif %}
-	  -->
-	</div><!-- /.nav-collapse -->    
+
+	</div><!--/.nav-collapse-->
       </div><!-- /.container -->
-    </div><!-- /.navbar -->
+    </div>
 
     <div class="container">
     {% block body %} {% endblock %}
     </div>
-  </body>
 
+
+<!-- Bootstrap core JavaScript
+         ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+	        <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
+
+  </body>
  </html>

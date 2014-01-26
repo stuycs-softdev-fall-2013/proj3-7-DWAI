@@ -12,8 +12,9 @@ def home():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        return render_template('login.html')
     if not 'username' in session:
-        return render_template('index.html', user="username")
+        return render_template('index.html', user=None)
     else:
         user = users.find_one(username=session['username'])
         return render_template('index.html', user=user)
