@@ -15,7 +15,6 @@ var canvasScript = function(){
             document.getElementById("header").style.display = "none";
 	}
 	canvas = document.getElementById("cvs");
-	canvas.style.cursor="help";
 	//check to see if we are running in a browser with touch support
 	stage = new createjs.Stage(canvas);
 	stage.autoClear = false;
@@ -30,9 +29,7 @@ var canvasScript = function(){
 	isPenDown = false;
 	strokes=[];
 	redoStack = [];
-//	penCursor = new createjs.Shape();
-//	penCursor.graphics.beginStroke("gray").drawCircle(stroke/2,stroke/2,stroke/2);
-//	penCursor.cache(0,0,stroke,stroke);
+
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = new createjs.Point(stage.mouseX, stage.mouseY);
 
@@ -54,8 +51,6 @@ var canvasScript = function(){
 	    drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
 	    currentPath.push(midPt);
 	}
-//	penCursor.setTransform(stage.mouseX-stroke/2,stage.mouseY-stroke/2);
-//	penCursor.updateCache('use');
 
         oldPt.x = stage.mouseX;
         oldPt.y = stage.mouseY;
@@ -109,7 +104,12 @@ var canvasScript = function(){
 	    redrawAll(strokes);
 	}
     }
-
+    var save = function(){
+	var jsonstuff = {
+	    "strokes" : strokes
+	};
+	return jsonstuff;
+    }
     
     
     return{
@@ -122,3 +122,6 @@ var canvasScript = function(){
 }();
 
 canvasScript.init();
+document.getElementById('undo').addEventListener("click",canvasScript.undo);
+document.getElementById('redo').addEventListener("click",canvasScript.redo);
+//$('.save').addEventListener("click,canvasScript.save);
