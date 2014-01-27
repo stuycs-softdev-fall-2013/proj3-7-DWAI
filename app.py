@@ -1,9 +1,12 @@
 #!/usr/local/bin/python
 from flask import Flask, render_template, session, redirect, request, url_for
 import json
-from models import User
+from bson import ObjectId
+from models import User, Image, Collection
 
 u = User()
+img = Image()
+models = Collection()
 
 app = Flask(__name__)
 app.secret_key = "my secret key"
@@ -18,7 +21,7 @@ def home():
             session['username'] = username
             return render_template('index.html', user = username)
         else:
-            return render_template('login.html', user = None, error = 'Invalid username and password combination')
+            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
@@ -40,12 +43,16 @@ def register():
     u.insert(username=request.form['username'], password=request.form['password'])
     return redirect(url_for('home'))
 
-@app.route('/login',methods=['GET','POST'])
-def login():
+@app.route('/login/<e>',methods=['GET','POST'])
+def login(e):
+    if e is not None:
+        error = e
+    else:
+        error = ""
     if 'username' in session:
         return redirect(url_for('home'))
     if request.method == 'GET':
-        return render_template('login.html')
+        return render_template('login.html', error=error)
     if not u.authenticate(request.form['username'],request.form['password']):
         return render_template('login.html',
                 error='Invalid username and password combination')
@@ -90,17 +97,51 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
-@app.route('/profile')
-def profile():
+@app.route('/me')
+def me():
     #show the user profile for that user
+    art = img.find(user=session['username'])
     if 'username' in session:
-        return render_template('profile.html', user = session['username'])
+        return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
     else:
         return redirect(url_for('home'))
 
+@app.route('/profile/<name>')
+def profile(name):
+    art = img.find(user=name)
+    if 'username' in session:
+        return render_template('profile.html', user = session['username'], owner = name,art=art)
+    else:
+        return render_template('profile.html', user= None, owner = name,art=art)
+
 @app.route('/canvas')
 def canvas():
-    return render_template('canvaspg.html', user=session['username'])
+    if 'username' in session:
+        #Don't know if this works
+        if request.method == 'POST':
+            request = json.load(sys.stdin)
+            i = img.insert(user=session['username'],title=request.form['title'])
+            i.change_image(request)
+        return render_template('canvaspg.html', user=session['username'])
+    else:
+        return redirect(url_for('login',e='Please log in to use canvas'))
+
+#sample image code
+@app.route('/test', methods=['GET','POST'])
+def test():
+    if request.method == 'POST':
+        f = request.files['file']
+        i = img.insert(user=session['username'],title='x')
+        i.change_image(f)
+        return render_template('test.html', image=i.image)
+    return render_template('test.html')
+
+@app.route('/_image/<image_id>')
+def serve_image(image_id):
+    image = models.fs.get(ObjectId(image_id))
+    data = image.read()
+    image.close()
+    return data
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -29,7 +29,7 @@ class UserModel(Model):
     # Change profile picture
     def change_propic(self, image_file):
         image_id = self.fs.put(image_file.read())
-        img = {'_id': image_id, 'date_added': datetime.now()}
+        img = {'_id': image_id}
         self.pic = img
         self.save()
 
