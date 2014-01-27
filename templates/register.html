@@ -1,52 +1,55 @@
 {% extends "layout.html" %}
 
 {% block head %}
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet"> 
+<!-- Custom styles for this template -->
+<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet"> 
 {% endblock %}
 
 
-  {% block body %}
+{% block body %}
 
-  <body>
-
-    <div class="container">
+<body>
+  
+  <div class="container">
+    
+    <form method="POST" class="form-signin" role="form">
+      <h2 class="form-signin-heading">Please fill in</h2>
       
-      <form method="POST" class="form-signin" role="form">
-        <h2 class="form-signin-heading">Please fill in</h2>
-	
-	<input type="text" class="form-control" id="user" name="username" placeholder="Username" required autofocus>
-        <input type="password" class="form-control" id="pw" name="password" placeholder="Password" required>
-        <input type="password" class="form-control" id="pw2" name="confirm" placeholder="Verify Password" required>
-        	
+      <input type="text" class="form-control" id="user" name="username" placeholder="Username" required autofocus>
+      <input type="password" class="form-control" id="pw" name="password" placeholder="Password" required>
+      <input type="password" class="form-control" id="pw2" name="confirm" placeholder="Verify Password" required>
+      
+      <center>
 	<div class="form-controls">
-	<button type="submit" name="button" class="btn btn-lg btn-primary" value="Register">Register</button>
-	<button type="reset" name="button" class="btn btn-lg" value="Cancel">Cancel</button>
+	  <button type="submit" name="button" class="btn btn-lg btn-primary" value="Register">Register</button>
+	  <button type="reset" name="button" class="btn btn-lg" value="Cancel">Cancel</button>
 	</div>
-      </form>
+      </center>
+    </form>
+    
+  </div> <!-- /container -->
+  
+</body>
 
-    </div> <!-- /container -->
+<center>
 
-  </body>
+  {% if error is defined %}
+  <div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{error}}
+  </div>
+  {% endif %}
+
+</center>
 
 
-  <center>
+<center>
   <h5>Already have an account? <a href="{{ url_for('login') }}">Login here</a></h5>
-  </center>
+</center>
 
-  <center>
-    <br>
-    {% if error is defined %}
-    <font color=red>{{error}}</font>
-    {% endif %}
-    <br>
-  </center>
-
-
-  {% endblock %}
-
+{% endblock %}
 
 </html>
