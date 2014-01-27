@@ -1,9 +1,12 @@
 #!/usr/local/bin/python
 from flask import Flask, render_template, session, redirect, request, url_for
 import json
-from models import User
+from bson import ObjectId
+from models import User, Image, Collection
 
 u = User()
+img = Image()
+models = Collection()
 
 app = Flask(__name__)
 app.secret_key = "my secret key"
@@ -102,6 +105,23 @@ def profile():
 @app.route('/canvas')
 def canvas():
     return render_template('canvaspg.html', user=session['username'])
+
+#sample image code
+@app.route('/test', methods=['GET','POST'])
+def test():
+    if request.method == 'POST':
+        f = request.files['file']
+        i = img.insert(user=session['username'],title='x')
+        i.change_image(f)
+        return render_template('test.html', image=i.image)
+    return render_template('test.html')
+
+@app.route('/_image/<image_id>')
+def serve_image(image_id):
+    image = models.fs.get(ObjectId(image_id))
+    data = image.read()
+    image.close()
+    return data
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
