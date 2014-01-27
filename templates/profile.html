@@ -80,6 +80,9 @@ Images in Gallery: {{NumImages}}
 <br>
 
 <h2>GALLERY</h2>
+{% for img in art %}
+  <img src="{{ url_for('serve_image', image_id=img._id) }}">
+{% endfor %}
  <div class="gallery">
       <div class="row">
         <div class="col-sm-6 col-md-4">
