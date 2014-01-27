@@ -2,9 +2,7 @@ var canvasScript = function(){
     var canvas, stage;
     var drawingCanvas;
     var oldPt, oldMidPt;
-    var color;
-    var stroke;
-    var penCursor;
+    var penWidth, penColor;
     var isPenDown;
     var currentPath;
     var strokes;
@@ -24,8 +22,6 @@ var canvasScript = function(){
 	createjs.Ticker.setFPS(30);
 	
 	drawingCanvas = new createjs.Shape();
-	color = "#FF00FF";
-	penWidth = 10;
 	isPenDown = false;
 	strokes=[];
 	redoStack = [];
@@ -33,13 +29,11 @@ var canvasScript = function(){
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = new createjs.Point(stage.mouseX, stage.mouseY);
 
-
 	stage.addEventListener("stagemousedown", handleMouseDown);
 	stage.addEventListener("stagemouseup", handleMouseUp);
 	stage.addEventListener("stagemousemove" , pen);
 	
 	stage.addChild(drawingCanvas);
-	stage.addChild(penCursor);
 	stage.update();
     }
 
@@ -48,7 +42,9 @@ var canvasScript = function(){
 	var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
 	
 	if(isPenDown){
-	    drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
+	    penWidth = getPenWidth();
+	    penColor = getPenColor();
+	    drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(penColor).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
 	    currentPath.push(midPt);
 	}
 
@@ -58,7 +54,6 @@ var canvasScript = function(){
         oldMidPt.x = midPt.x;
         oldMidPt.y = midPt.y;
 
-
         stage.update();
     }
 
@@ -66,7 +61,7 @@ var canvasScript = function(){
 	isPenDown = false;
 	strokes.push({
 	    pensize: penWidth,
-	    color: color,
+	    color: penColor,
 	    path: currentPath
 	});
     }
@@ -110,7 +105,12 @@ var canvasScript = function(){
 	};
 	return jsonstuff;
     }
-    
+    var getPenWidth = function(){
+	return document.getElementById("penslide").value;
+    }
+    var getPenColor = function(){
+	return document.getElementById("pencolor").value;
+    }
     
     return{
 	init:init,
