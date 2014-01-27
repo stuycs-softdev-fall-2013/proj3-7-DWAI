@@ -108,11 +108,14 @@ def me():
 
 @app.route('/profile/<name>')
 def profile(name):
-    art = img.find(user=name)
-    if 'username' in session:
-        return render_template('profile.html', user = session['username'], owner = name,art=art)
+    if u.exists(name):
+        art = img.find(user=name)
+        if 'username' in session:
+            return render_template('profile.html', user = session['username'], owner = name,art=art)
+        else:
+            return render_template('profile.html', user= None, owner = name,art=art)
     else:
-        return render_template('profile.html', user= None, owner = name,art=art)
+        return redirect(url_for('home'))
 
 @app.route('/canvas')
 def canvas():
