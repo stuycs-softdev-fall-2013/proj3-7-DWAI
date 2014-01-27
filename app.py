@@ -13,7 +13,6 @@ app.secret_key = "my secret key"
 
 
 @app.route('/', methods = ['GET', 'POST'])
-@app.route('/home', methods = ['GET', 'POST'])
 def home():
     if request.method == 'POST':
         username = request.form['Username']
