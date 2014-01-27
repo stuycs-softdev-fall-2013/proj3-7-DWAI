@@ -100,10 +100,17 @@ var canvasScript = function(){
 	}
     }
     var save = function(){
-	var jsonstuff = {
-	    "strokes" : strokes
+	var savestuff = {
+	    img: canvas.toDataURL()
 	};
-	return jsonstuff;
+	jQuery.ajax({
+	    url:'http://localhost:5000/canvas#save' //What is this supposed to be?
+	    type: 'POST',
+	    cache false,
+	    data: JSON.stringify(savestuff),
+	    contentType: 'application/json',
+	    processData: false
+	});
     }
     var getPenWidth = function(){
 	return document.getElementById("penslide").value;
