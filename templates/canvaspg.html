@@ -5,19 +5,17 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">  
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/navbar/navbar.css" rel="stylesheet">
-
-<!--
     
-    <script type="text/javascript">
-      function printValue(sliderID, textbox){
+    <script>
+      function printValue(sliderID, textbox) {
       var x = document.getElementById(textbox);
-      var y = document.getElementById(sliderOD);
+      var y = document.getElementById(sliderID);
       x.value = y.value;
       }
       
-      window.onload = function() { printValue('penslider', 'rangeValue); }
+      window.onload = function() { printValue('penslide', 'rangeValue'); }
     </script>
--->
+
 
 {% endblock %}
 
@@ -38,11 +36,16 @@
           </button>
         </div>
         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
+          <div class="nav navbar-nav">
 	    <form class="navbar-form">
-	      <button type="button" class="btn btn-default" id="undo">Undo</button>
-	      <button type="button" class="btn btn-default" id="redo">Redo</button>
-              <div class="dropdown">
+	      <button type="button" class="btn btn-default" id="undo">
+		<span class="glyphicon glyphicon-arrow-left"></span> Undo
+	      </button>
+	      <button type="button" class="btn btn-default" id="redo">
+		<span class="glyphicon glyphicon-arrow-right"></span> Redo
+	      </button>
+              <!--
+	      <div class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
 		<ul class="dropdown-menu">
                   <li><a href="#">Canvas Size</a></li>
@@ -53,17 +56,32 @@
                   <li><a href="#">Pick color</a></li>
 		</ul>
               </div>
-	      <input type="color" name="pencolor"><input type="submit">
-	      Pen size: <input id="penslide" type="range" name="pensize" min="1" max="100" value="50"/> 
-			       <!--onchange="printValue('penslide', 'rangeValue')"-->
-	      <input id="rangeValue" type="text" size="3" value="penslide.value"/>
-	      <input type="submit"/>
-	    </form>
-	  </ul> <!-- navbar -->
+	      -->
+	      
+	      <label type="text"id="color">Color: </label>
+	      <input type="color" name="pencolor">
 
-	  <form class="nav navbar-nav navbar-right">
-            <button type="button" class="btn btn-success" id="save">Save</button>
-          </form>
+	      <label type="text" id="penslide">Pen size: </label>
+	      <input id="penslide" type="range" name="pensize" min="1" max="100" value="50" onchange="printValue('penslide', 'rangeValue')">
+	      <input id="rangeValue" type="text" size="3"/>
+	      <button type="submit" class="btn btn-info btn-xs" id="submitpensize">Submit</button>
+
+	    </form>
+	  </div> <!-- navbar -->
+
+	  <div class="nav navbar-nav navbar-right"> 
+	    <form class="navbar-form">
+            
+	      <button type="button" class="btn btn-success" id="save">
+	      <span class="glyphicon glyphicon-save"></span> Save
+	    </button>
+	    <button type="button" class="btn btn-danger" id="delete">
+	      <span class="glyphicon glyphicon-trash"></span> Delete
+	    </button>
+	    
+	    </form>
+
+	  </div>
 
         </div><!--/.nav-collapse -->
       </div>
@@ -81,11 +99,13 @@
       <!-- Bootstrap core JavaScript & Canvas 
 	   ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
+            
+      <script type="text/javascript" src="../static/js/easeljs-0.7.1.min.js"></script>
+      <script type="text/javascript" src="../static/js/canvas.js"></script>  
+
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
       <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
       
-      <script type="text/javascript" src="../static/js/easeljs-0.7.1.min.js"></script>
-      <script type="text/javascript" src="../static/js/canvas.js"></script>  
-      {% endblock %}
+{% endblock %}
       
 </html>
