@@ -100,21 +100,28 @@ def changeinfo():
 @app.route('/me')
 def me():
     #show the user profile for that user
+    art = img.find(user=session['username'])
     if 'username' in session:
-        return render_template('profile.html', user = session['username'], owner = session['username'])
+        return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
     else:
         return redirect(url_for('home'))
 
 @app.route('/profile/<name>')
 def profile(name):
+    art = img.find(user=name)
     if 'username' in session:
-        return render_template('profile.html', user = session['username'], owner = name)
+        return render_template('profile.html', user = session['username'], owner = name,art=art)
     else:
-        return render_template('profile.html', user= None, owner = name)
+        return render_template('profile.html', user= None, owner = name,art=art)
 
 @app.route('/canvas')
 def canvas():
     if 'username' in session:
+        #Don't know if this works
+        if request.method == 'POST':
+            request = json.load(sys.stdin)
+            i = img.insert(user=session['username'],title=request.form['title'])
+            i.change_image(request)
         return render_template('canvaspg.html', user=session['username'])
     else:
         return redirect(url_for('login',e='Please log in to use canvas'))
