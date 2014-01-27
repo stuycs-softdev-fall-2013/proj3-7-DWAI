@@ -95,33 +95,41 @@
           {{message}}
           <h1>Start Now!</h1>
           <p>Go straight to a blank canvas!</p>
-          <!--<p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>-->
 
           <!-- Button trigger modal -->
           <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#myModal">Blank canvas &raquo;</a></p>
 
           <!-- Modal -->
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel">Canvas</h4>
-                </div>
-                <div class="modal-body">
-                  Canvas size: 
-                  <input id="length" type="text" size="8" class="form-control" value="1000"> x <input id="width" type="text" size="8" class="form-control" value="1000">
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" id="create" class="btn btn-primary" onClick="window.location.href='/canvas'">Create</button>
-                </div>
-              </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-          </div><!-- /.modal -->
-        </div>
+	  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+		<form id="widxheight" method="post">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h4 class="modal-title" id="myModalLabel">Canvas</h4>
+		  </div>
+		  <div class="modal-body row">
+		    <h3>Canvas size:</h3>
+		    <div class="col-xs-3">
+ 		      <input id="width" type="number" size="8" class="form-control" value="1000" min="100" max="1000"> 
+		    </div>
+		    <br> x <br>
+		    <div class="col-xs-3">
+		      <input id="height" type="number" size="8" class="form-control" value="500" min="100" max="750">
+		    </div>
+		  </div>
+		  <div class="modal-footer">
+		    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		    <button type="button" id="create" class="btn btn-primary" onClick="window.location.href='/canvas'">Create</button>
+		  </div>
+		</form>
+	      </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	  </div><!-- /.modal -->
+	</div>
+
 	<div class="list-group">
-          <a href="./profle/alvin" class="list-group-item ">Alvin's Profile</a>
+          <a href="./profile/alvin" class="list-group-item ">Alvin's Profile</a>
           <a href="./profile/vivian" class="list-group-item">Vivian's Profile</a>
           <a href="./profile/michele" class="list-group-item">Michele's Profile</a>
           <a href="./profile/judy" class="list-group-item">Judy's Profile</a>
@@ -132,11 +140,6 @@
 <br>
 <br>
 <br>
-
-
-
-
-
 
 
  {% endblock %}  
@@ -150,3 +153,16 @@
   <script src="./Off Canvas Template for Bootstrap_files/offcanvas.js"></script>
 
 
+  <script type="text/javascript">
+    
+    function moveToCanvas()
+    {
+    var width = width.value;
+    var height = height.value;
+    window.location.href='/canvas';
+    }
+
+    var createcanvas = document.getElementById("create");
+    createcanvas.addEventListener("click", moveToCanvas);
+
+  </script>
