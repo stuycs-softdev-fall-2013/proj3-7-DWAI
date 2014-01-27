@@ -32,6 +32,11 @@ var canvasScript = function(){
 	stage.addEventListener("stagemousedown", handleMouseDown);
 	stage.addEventListener("stagemouseup", handleMouseUp);
 	stage.addEventListener("stagemousemove" , pen);
+
+	document.getElementById('undo').addEventListener("click",undo);
+	document.getElementById('redo').addEventListener("click",redo);
+	//$('.save').addEventListener("click,save);
+
 	
 	stage.addChild(drawingCanvas);
 	stage.update();
@@ -58,6 +63,7 @@ var canvasScript = function(){
     }
 
     var handleMouseUp = function() {
+	console.log(strokes);
 	isPenDown = false;
 	strokes.push({
 	    pensize: penWidth,
@@ -88,11 +94,14 @@ var canvasScript = function(){
 	stage.update();
     }
     var undo = function(){
+	strokes.pop(); //Needed b.c its randomly adding an empty stroke
 	undostroke = strokes.pop();
+	console.log(strokes);
 	redrawAll(strokes);
 	redoStack.push(undostroke);
     }
     var redo = function(){
+	strokes.pop(); //Needed b.c its randomly adding an empty stroke
 	var redostroke = redoStack.pop();
 	if(redostroke){
 	    strokes.push(redostroke);
@@ -113,7 +122,7 @@ var canvasScript = function(){
 	});
     }
     var getPenWidth = function(){
-	return document.getElementById("penslide").value;
+	return document.getElementById("pensizer").value;
     }
     var getPenColor = function(){
 	return document.getElementById("pencolor").value;
@@ -129,6 +138,3 @@ var canvasScript = function(){
 }();
 
 canvasScript.init();
-document.getElementById('undo').addEventListener("click",canvasScript.undo);
-document.getElementById('redo').addEventListener("click",canvasScript.redo);
-//$('.save').addEventListener("click,canvasScript.save);
