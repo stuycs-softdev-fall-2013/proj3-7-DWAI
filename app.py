@@ -21,7 +21,7 @@ def home():
             session['username'] = username
             return render_template('index.html', user = username)
         else:
-            return render_template('login.html', user = None, error = 'Invalid username and password combination')
+            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
@@ -43,12 +43,16 @@ def register():
     u.insert(username=request.form['username'], password=request.form['password'])
     return redirect(url_for('home'))
 
-@app.route('/login',methods=['GET','POST'])
-def login():
+@app.route('/login/<e>',methods=['GET','POST'])
+def login(e):
+    if e is not None:
+        error = e
+    else:
+        error = ""
     if 'username' in session:
         return redirect(url_for('home'))
     if request.method == 'GET':
-        return render_template('login.html')
+        return render_template('login.html', error=error)
     if not u.authenticate(request.form['username'],request.form['password']):
         return render_template('login.html',
                 error='Invalid username and password combination')
@@ -93,17 +97,27 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
-@app.route('/profile')
-def profile():
+@app.route('/me')
+def me():
     #show the user profile for that user
     if 'username' in session:
-        return render_template('profile.html', user = session['username'])
+        return render_template('profile.html', user = session['username'], owner = session['username'])
     else:
         return redirect(url_for('home'))
 
+@app.route('/profile/<name>')
+def profile(name):
+    if 'username' in session:
+        return render_template('profile.html', user = session['username'], owner = name)
+    else:
+        return render_template('profile.html', user= None, owner = name)
+
 @app.route('/canvas')
 def canvas():
-    return render_template('canvaspg.html', user=session['username'])
+    if 'username' in session:
+        return render_template('canvaspg.html', user=session['username'])
+    else:
+        return redirect(url_for('login',e='Please log in to use canvas'))
 
 #sample image code
 @app.route('/test', methods=['GET','POST'])
