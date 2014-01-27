@@ -90,13 +90,20 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
-@app.route('/profile')
-def profile():
+@app.route('/me')
+def me():
     #show the user profile for that user
     if 'username' in session:
-        return render_template('profile.html', user = session['username'])
+        return render_template('profile.html', user = session['username'], owner = session['username'])
     else:
         return redirect(url_for('home'))
+
+@app.route('/profile/<name>')
+def profile(name):
+    if 'username' in session:
+        return render_template('profile.html', user = session['username'], owner = name)
+    else:
+        return render_template('profile.html', user= None, owner = name)
 
 @app.route('/canvas')
 def canvas():
