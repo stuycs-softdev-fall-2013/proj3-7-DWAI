@@ -2,9 +2,7 @@ var canvasScript = function(){
     var canvas, stage;
     var drawingCanvas;
     var oldPt, oldMidPt;
-    var color;
-    var stroke;
-    var penCursor;
+    var penWidth, penColor;
     var isPenDown;
     var currentPath;
     var strokes;
@@ -24,8 +22,6 @@ var canvasScript = function(){
 	createjs.Ticker.setFPS(30);
 	
 	drawingCanvas = new createjs.Shape();
-	color = "#FF00FF";
-	penWidth = 10;
 	isPenDown = false;
 	strokes=[];
 	redoStack = [];
@@ -33,13 +29,16 @@ var canvasScript = function(){
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = new createjs.Point(stage.mouseX, stage.mouseY);
 
-
 	stage.addEventListener("stagemousedown", handleMouseDown);
 	stage.addEventListener("stagemouseup", handleMouseUp);
 	stage.addEventListener("stagemousemove" , pen);
+
+	document.getElementById('undo').addEventListener("click",undo);
+	document.getElementById('redo').addEventListener("click",redo);
+	//$('.save').addEventListener("click,save);
+
 	
 	stage.addChild(drawingCanvas);
-	stage.addChild(penCursor);
 	stage.update();
     }
 
@@ -48,7 +47,9 @@ var canvasScript = function(){
 	var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
 	
 	if(isPenDown){
-	    drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
+	    penWidth = getPenWidth();
+	    penColor = getPenColor();
+	    drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(penColor).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
 	    currentPath.push(midPt);
 	}
 
@@ -58,15 +59,15 @@ var canvasScript = function(){
         oldMidPt.x = midPt.x;
         oldMidPt.y = midPt.y;
 
-
         stage.update();
     }
 
     var handleMouseUp = function() {
+	console.log(strokes);
 	isPenDown = false;
 	strokes.push({
 	    pensize: penWidth,
-	    color: color,
+	    color: penColor,
 	    path: currentPath
 	});
     }
@@ -93,11 +94,14 @@ var canvasScript = function(){
 	stage.update();
     }
     var undo = function(){
+	strokes.pop(); //Needed b.c its randomly adding an empty stroke
 	undostroke = strokes.pop();
+	console.log(strokes);
 	redrawAll(strokes);
 	redoStack.push(undostroke);
     }
     var redo = function(){
+	strokes.pop(); //Needed b.c its randomly adding an empty stroke
 	var redostroke = redoStack.pop();
 	if(redostroke){
 	    strokes.push(redostroke);
@@ -105,12 +109,24 @@ var canvasScript = function(){
 	}
     }
     var save = function(){
-	var jsonstuff = {
-	    "strokes" : strokes
+	var savestuff = {
+	    img: canvas.toDataURL()
 	};
-	return jsonstuff;
+	jQuery.ajax({
+	    url:'http://localhost:5000/canvas#save', //What is this supposed to be?
+	    type: 'POST',
+	    cache: false,
+	    data: JSON.stringify(savestuff),
+	    contentType: 'application/json',
+	    processData: false
+	});
     }
-    
+    var getPenWidth = function(){
+	return document.getElementById("pensizer").value;
+    }
+    var getPenColor = function(){
+	return document.getElementById("pencolor").value;
+    }
     
     return{
 	init:init,
@@ -122,6 +138,3 @@ var canvasScript = function(){
 }();
 
 canvasScript.init();
-document.getElementById('undo').addEventListener("click",canvasScript.undo);
-document.getElementById('redo').addEventListener("click",canvasScript.redo);
-//$('.save').addEventListener("click,canvasScript.save);
