@@ -104,9 +104,9 @@ var canvasScript = function(){
 	    img: canvas.toDataURL()
 	};
 	jQuery.ajax({
-	    url:'http://localhost:5000/canvas#save' //What is this supposed to be?
+	    url:'http://localhost:5000/canvas#save', //What is this supposed to be?
 	    type: 'POST',
-	    cache false,
+	    cache: false,
 	    data: JSON.stringify(savestuff),
 	    contentType: 'application/json',
 	    processData: false
