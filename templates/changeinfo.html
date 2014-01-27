@@ -14,34 +14,55 @@
     </div>
   </div>
 
+  <br><br>
   {% if error %}
-  <font color=red><sub>{{error}}</sub></font></td>
+  <div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{error}}
+  </div>
   {% endif %}
-
-  <br>
-  <br>
 
   <h3>Make your changes:</h3>
-
-  {% if usererror %}
-  <font color="red">
-    <sub>{{usererror}}</sub></font>
-  {% endif %}
-  {% if usersuccess %}
-  <font color="green">
-    <sub>{{usersuccess}}</sub></font>
-  {% endif %}
   
+  {% if usererror %}
+  <div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{usererror}}
+  </div>
+  {% endif %}
+
+  {% if usersuccess %}
+  <div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{usersuccess}}
+  </div>
+  {% endif %}
+     
   <div class="bs-example"> 
-      
-      <div class="form-group">
-	<label for="newuser" class="col-sm-2 control-label">Change username</label>
+    
+    <div class="form-group">
+      <label for="newuser" class="col-sm-2 control-label">Change username</label>
 	<div class="col-sm-6">
 	  <input type="text" class="form-control" name="newuser" placeholder="New username">
 	</div>
       </div>
 
-<br><br>
+    <br>
+    <br>
+    <br>
+
+      {% if passerror %}
+      <div class="alert alert-danger alert-dismissible">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{passerror}}
+      </div>
+      {% endif %}
+      {% if pwsuccess %}
+      <div class="alert alert-success alert-dismissible">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{pwsuccess}}
+      </div>
+      {% endif %}
 
       <div class="form-group">
 	<label for="newpw" class="col-sm-2 control-label">Change password</label>
@@ -50,16 +71,14 @@
 	</div>
       </div>
     
-<br>
-        
+<br><br>        
       <div class="form-group">
-	<label for="confirm"  class="col-sm-2 control-label">Verify password</label>
+	<label for="confirm"  class="col-sm-2 control-label">Confirm password</label>
 	<div class="col-sm-6">
-	  <input type="password" name="confirm" class="form-control" placeholder="Verify password">
+	  <input type="password" name="confirm" class="form-control" placeholder="Confirm new password">
 	</div>
       </div>
       
-
 <br><br>
 
       <div class="form-group">

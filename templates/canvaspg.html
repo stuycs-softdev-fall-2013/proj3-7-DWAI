@@ -1,41 +1,28 @@
 {% extends "layout.html" %}
 
 {% block head %}
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">  
-    <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/examples/navbar/navbar.css" rel="stylesheet">
-    
-    <script>
-      function printValue(sliderID, textbox) {
-      var x = document.getElementById(textbox);
-      var y = document.getElementById(sliderID);
-      x.value = y.value;
-      }
-      
-      window.onload = function() { printValue('penslide', 'rangeValue'); }
-    </script>
-
+<!-- Bootstrap core CSS -->
+<link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">  
+<!-- Custom styles for this template -->
+<link href="http://getbootstrap.com/examples/navbar/navbar.css" rel="stylesheet">
 
 {% endblock %}
 
-
-
 {% block body %}
-    <br>
-    <br>
-    <div class="container">
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse">
+<br>
+<br>
+<div class="container">
+  <!-- Static navbar -->
+  <div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse">
           <div class="nav navbar-nav">
 	    <form class="navbar-form">
 	      <button type="button" class="btn btn-default" id="undo">
@@ -59,13 +46,11 @@
 	      -->
 	      
 	      <label type="text"id="color">Color: </label>
-	      <input type="color" name="pencolor">
+	      <input type="color" id="pencolor" name="pencolor">
 
 	      <label type="text" id="penslide">Pen size: </label>
-	      <input id="penslide" type="range" name="pensize" min="1" max="100" value="50" onchange="printValue('penslide', 'rangeValue')">
-	      <input id="rangeValue" type="text" size="3"/>
-	      <button type="submit" class="btn btn-info btn-xs" id="submitpensize">Submit</button>
-
+	      <input id="penslide" type="range" name="pensize" min="1" max="100" value="50">
+	      
 	    </form>
 	  </div> <!-- navbar -->
 
