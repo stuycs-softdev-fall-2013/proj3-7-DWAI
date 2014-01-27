@@ -107,7 +107,10 @@ def profile(name):
 
 @app.route('/canvas')
 def canvas():
-    return render_template('canvaspg.html', user=session['username'])
+    if 'username' in session:
+        return render_template('canvaspg.html', user=session['username'])
+    else:
+        return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
