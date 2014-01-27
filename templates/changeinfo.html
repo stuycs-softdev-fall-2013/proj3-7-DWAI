@@ -4,9 +4,15 @@
 
 <h1>Account Settings</h1>
 
-<form method="POST">
+<form method="POST" class="form" role="form">
   <h3>Please enter your current password to make any changes.</h3>
-  <b>Current password</b> <input type="password" name="oldpw"> 
+ 
+  <div class="form-group">
+    <label for="oldpw" class="col-sm-2 control-label">Current password</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" name="oldpw" placeholder="Current password">
+    </div>
+  </div>
 
   {% if error %}
   <font color=red><sub>{{error}}</sub></font></td>
@@ -17,37 +23,52 @@
 
   <h3>Make your changes:</h3>
 
-  <table class="table" style="border:1px solid rgb(221,221,221)">
-    <tr class="active">
-      <th>Change username</th>
-      <td><input type="text" name="newuser"> 
-      {% if usererror %}
-        <font color=red><sub>{{usererror}}</sub></font></td>
-      {% endif %}
-      {% if usersuccess %}
-	<font color=green><sub>{{usersuccess}}</sub></font></td>
-      {% endif %}
-    </tr>
+  {% if usererror %}
+  <font color="red">
+    <sub>{{usererror}}</sub></font>
+  {% endif %}
+  {% if usersuccess %}
+  <font color="green">
+    <sub>{{usersuccess}}</sub></font>
+  {% endif %}
+  
+  <div class="bs-example"> 
+      
+      <div class="form-group">
+	<label for="newuser" class="col-sm-2 control-label">Change username</label>
+	<div class="col-sm-6">
+	  <input type="text" class="form-control" name="newuser" placeholder="New username">
+	</div>
+      </div>
 
-    <tr class="active">
-      <th>Change password</th>
-      <td><input type="password" name="newpw"></td>
-      {% if passerror %}
-        <font color=red><sub>{{passerror}}</sub></font></td>
-      {% endif %}
-      {% if passsuccess %}
-	<font color=green><sub>{{passsuccess}}</sub></font></td>
-      {% endif %}
-    </tr>
+<br><br>
 
-    <tr class="active">
-      <th>Verify new password</th>
-      <td><input type="password" name="confirm"> 
-   </tr>
+      <div class="form-group">
+	<label for="newpw" class="col-sm-2 control-label">Change password</label>
+	<div class="col-sm-6">
+	  <input type="password" class="form-control" name="newpw" placeholder="New password">
+	</div>
+      </div>
+    
+<br>
+        
+      <div class="form-group">
+	<label for="confirm"  class="col-sm-2 control-label">Verify password</label>
+	<div class="col-sm-6">
+	  <input type="password" name="confirm" class="form-control" placeholder="Verify password">
+	</div>
+      </div>
+      
 
-    <tr class="active">
-      <td colspan="2" style="text-align:center"><input type="submit" name="button" value="Submit"></td>
-    </tr>
-  </table>
+<br><br>
+
+      <div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+	  <input type="submit" class="btn btn-primary" name="button" value="Submit">
+	</div>
+      </div>
+  </div>
 </form>
+
 {% endblock %}
+
