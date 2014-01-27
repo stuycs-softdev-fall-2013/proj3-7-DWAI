@@ -1,7 +1,9 @@
 #!/usr/local/bin/python
 from flask import Flask, render_template, session, redirect, request, url_for
 import json
-import auth
+from models import User
+
+u = User()
 
 app = Flask(__name__)
 app.secret_key = "my secret key"
@@ -12,7 +14,7 @@ def home():
     if request.method == 'POST':
         username = request.form['Username']
         password = request.form['Password']
-        if auth.authenticate(username,password):
+        if u.authenticate(username=username,password=password):
             session['username'] = username
             return render_template('index.html', user = username)
         else:
@@ -32,9 +34,10 @@ def register():
         return render_template('register.html')
     if request.form['password'] != request.form['confirm']:
         return render_template('register.html', error='Passwords do not match')
-    if not auth.adduser(request.form['username'],request.form['password']):
+    if u.exists(username=request.form['username']):
 	return render_template('register.html', error='Username already exists')
     session['username'] = request.form['username']
+    u.insert(username=request.form['username'], password=request.form['password'])
     return redirect(url_for('home'))
 
 @app.route('/login',methods=['GET','POST'])
@@ -43,7 +46,7 @@ def login():
         return redirect(url_for('home'))
     if request.method == 'GET':
         return render_template('login.html')
-    if not auth.authenticate(request.form['username'],request.form['password']):
+    if not u.authenticate(request.form['username'],request.form['password']):
         return render_template('login.html',
                 error='Invalid username and password combination')
     session['username'] = request.form['username']
@@ -63,28 +66,29 @@ def changeinfo():
         return redirect(url_for('home'))
     if request.method == 'GET':
         return render_template('changeinfo.html',user=session['username'])
+    x = u.find_one(username=session['username'])
+    error = None
     usererror = None
     passerror = None
     usersuccess = None
     pwsuccess = None
-    if request.form['newuser']:
-        if not auth.changeuser(request.form['oldpw'],
-		session['username'],
-                request.form['newuser']):
-            usererror = 'Username change unsuccessful. Check your password.'
-        else:
-            session['username'] = request.form['newuser']
-            usersuccess = 'Username successfully changed to: ' + request.form['newuser']
-    if request.form['newpw']:
-	if request.form['newpw'] != request.form['confirm']:
-	    passerror = 'Passwords do not match.'
-        elif not auth.changepass(session['username'],
-		request.form['oldpw'],
-		request.form['newpw']):
-	    passerror = 'Password change unsuccessful. Check your password.'
-	else:
-            pwsuccess= 'Password successfully changed.'
-    return render_template('changeinfo.html', user=session['username'],usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
+    if x.password == request.form['oldpw']:
+        if request.form['newuser']:
+            if not x.change_username(request.form['oldpw'],
+                    request.form['newuser']):
+                usererror = 'Username already exists.'
+            else:
+                session['username'] = request.form['newuser']
+                usersuccess = 'Username successfully changed to: ' + request.form['newuser']
+        if request.form['newpw']:
+            if not x.change_password(request.form['oldpw'], request.form['newpw'],
+                    request.form['confirm']):
+                passerror= 'Passwords do not match.'
+            else:
+                pwsuccess= 'Password successfully changed.'
+    else:
+        error = 'Incorrect password'
+    return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
 @app.route('/profile')
 def profile():
@@ -96,7 +100,7 @@ def profile():
 
 @app.route('/canvas')
 def canvas():
-    return render_template('canvaspg.html')
+    return render_template('canvaspg.html', user=session['username'])
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
