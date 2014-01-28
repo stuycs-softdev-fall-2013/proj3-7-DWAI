@@ -31,16 +31,16 @@ def homepage(e):
             return render_template('index.html', user = username)
         else:
             return redirect(url_for('login.html', e = 'Invalid username and password combination'))
-    pics = img.get_by_date
-    art = []
-    for im in pics:
-        art.append(im.image)
-    pics = art[:3]
+    #pics = img.get_by_date
+    #art = []
+    #for im in pics:
+    #    art.append(im.image)
+    #pics = art[:3]
     if not 'username' in session:
-        return render_template('index.html', user=None, error=error, pics=pics)
+        return render_template('index.html', user=None, error=error) #pics=pics)
     else:
         user = session['username']
-        return render_template('index.html', user=user, error=error, pics=pics)
+        return render_template('index.html', user=user, error=error) #pics=pics)
     
 
 @app.route('/register',methods=['GET','POST'])
