@@ -1,0 +1,16 @@
+Sample image page
+<form method=POST action=# enctype="multipart/form-data" class="pure-form image-form">
+  <legend>Upload Image</legend>  
+  <input type=file name=file value="Choose image">
+  <input type=text name=img_title placeholder="Image title">
+  <button type="submit" name="btn" value="Upload" class="pure-button pure-button-primary pure-button-small">Upload</button>
+</form>
+
+<div class=image-list>
+  {% if image %}
+  <div class=image-item>
+    <img src="{{ url_for('serve_image', image_id=image._id) }}">
+    <div class=label>{{image.title}}</div>
+  </div>
+  {% endif %}
+</div>

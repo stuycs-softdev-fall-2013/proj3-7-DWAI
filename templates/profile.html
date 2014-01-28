@@ -26,8 +26,13 @@
           <div class="item active">
             <img data-src="holder.js/400x300/auto/#777:#777" alt="First slide image">
             <div class="carousel-caption">
-              <h4>{{user}}'s </h4>
-              <p>Name of piece</p>
+              <h4>{{owner}}'s </h4>
+	      {% if art %}
+	      <div class=image-item>
+		<img src="{{ url_for('serve_image', image_id=art[0]._id) }}">
+	      </div>
+	      <p>{{art[0].title}}</p>
+	      {% endif %}
             </div>
           </div>
           <div class="item">
@@ -53,7 +58,7 @@
         </a>
       </div>
     </div><!-- /example -->
-<h1><img data-src="holder.js/140x140" class="img-rounded"> {{user}} 's Profile</h1>
+<h1><img data-src="holder.js/140x140" class="img-rounded"> {{owner}} 's Profile</h1>
 <!--
 <div class="form-group">
   <label for="file">Add profile picture</label>
