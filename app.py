@@ -171,6 +171,13 @@ def upload():
         x.change_image(f)
         return redirect(url_for('me'))
 
+@app.route('/image/<user>/<title>')
+def imagepg(user,title):
+    pic = img.find_one(user=user,title=title)
+    if pic is not None:
+        return render_template('imagepg.html', pic=pic)
+    return redirect(url_for('homepage',e="Page does not exist"))
+
 @app.route('/_image/<image_id>')
 def serve_image(image_id):
     image = models.fs.get(ObjectId(image_id))
