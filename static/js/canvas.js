@@ -47,10 +47,9 @@ var canvasScript = function(){
 
     var pen = function(event) {
         var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
-        
+        penWidth = getPenWidth();
+        penColor = getPenColor();
         if(isPenDown){
-            penWidth = getPenWidth();
-            penColor = getPenColor();
             drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(penColor).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
             currentPath.push(midPt);
         }
@@ -109,41 +108,47 @@ var canvasScript = function(){
             redrawAll(strokes);
         }
     }
-    var save = function(){
-        var savestuff = {
-            img: canvas.toDataURL()
-        };
-        var onSuccess = function(response){
-            console.debug('response',reponse);
-        }
-        var onError = function(r,textStatus,errorThrown){
-            console.debug('error',textStatus + ", " + errorThrown + ":\n" + r.responseText);
-        }
-        console.log(savestuff);
-        jQuery.ajax({
-            url:'http://localhost:5000/canvas',
-            type: 'POST',
-            cache: false,
-            data: JSON.stringify(savestuff),
-            contentType: 'application/json',
-            processData: false,
-            success: onSuccess,
-            error: onError
-        });
-    }
     var getPenWidth = function(){
-        return document.getElementById("pensizer").value;
+	var size = document.getElementById("pensizer").value;
+        document.getElementById("penslide").innerHTML = "Pensize: " + size;
+	return size;
     }
     var getPenColor = function(){
         return document.getElementById("pencolor").value;
     }
+    var save = function() {
+	var title=prompt("Name your drawing:","Title");
+	if(title!=null){
+	    var savestuff = {
+		img: document.getElementById("cvs").toDataURL()
+	    };
+	    var onSuccess = function(response){
+		console.debug('response',reponse);
+	    }
+	    var onError = function(r,textStatus,errorThrown){
+		console.debug('error',textStatus + ", " + errorThrown + ":\n" + r.responseText);
+	    }
+	    jQuery.ajax({
+		url:'http://localhost:5000/canvas',
+		type: 'POST',
+		cache: false,
+		data: JSON.stringify(savestuff),
+		contentType: 'application/json',
+		processData: false,
+		success: onSuccess,
+		error: onError
+	    });
+	}
+    }
+    
     
     return{
         init:init,
         handleMouseDown:handleMouseDown,
         handleMouseUp:handleMouseUp,
         undo:undo,
-        redo:redo
+        redo:redo,
+	save:save
     }
 }();
 
