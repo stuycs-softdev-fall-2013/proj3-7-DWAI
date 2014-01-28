@@ -161,9 +161,11 @@ def canvas(w=1000, h=500):
     if 'username' in session:
         #Don't know if this works
         if request.method == 'POST':
+            print "TRYING TO GET JSON DATA"
             requestimg = json.load(sys.stdin)
             i = img.insert(user=session['username'],title=request.form['title'])
             i.change_image(requestimg)
+            return redirect(url_for("me"))
         return render_template('canvaspg.html', user=session['username'], w=str(w), h=str(h))
     else:
         return redirect(url_for('login',e='Please log in to access page'))

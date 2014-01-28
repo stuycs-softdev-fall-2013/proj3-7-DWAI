@@ -50,7 +50,7 @@
 
 	      <label type="text" id="penslide">Pen size: </label>
 	      <input id="pensizer" type="range" name="pensize" min="1" max="100" value="25">
-	      <input id="rangeValue" type="text" size="3" value="">
+	      
 
 	    </form>
 	  </div> <!-- navbar -->
@@ -58,7 +58,7 @@
 	  <div class="nav navbar-nav navbar-right"> 
 	    <form method="POST" role="form" class="navbar-form">
             
-	      <button type="button" class="btn btn-success" id="save" onClick="saveCanvas()">
+	      <button type="button" class="btn btn-success" id="save">
 	      <span class="glyphicon glyphicon-save"></span> Save
 	    </button>
 	    <button type="button" class="btn btn-danger" id="delete" onClick="deleteCanvas()">
@@ -101,16 +101,6 @@
 	if (r==true) { window.location.href="/canvas"; }
 	else { x="No I don't want to delete it!!"; }
 	<!--document.getElementById("demo").innerHTML=x;-->
-	}
-      </script>
-
-      <script>
-	function saveCanvas() {
-
-	var title=prompt("Name your drawing:","Title");
-	if (title!=null) { window.location.href="/me"; }
-	<!-- save title name, redirects to gallery -->
-	
 	}
       </script>
 
