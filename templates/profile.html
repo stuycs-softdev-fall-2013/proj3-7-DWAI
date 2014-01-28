@@ -24,18 +24,24 @@
         </ol>
         <div class="carousel-inner">
 	  
-          {% if art|length > 0 %}
+         
 	  <div class="item active">         
 	    <div class=image-item>
-              <img src="{{ url_for('serve_image', image_id=art[0].image._id) }}" width="400" height="300">
-            </div>
-            <div class="carousel-caption">
-              <h4>{{owner}}'s</h4>
-	      <p>{{art[0].title}}</p>	   
-	    </div>
-          </div>           
-	  {% endif %}
-         
+	      <img data-src="holder.js/400x150/auto/#666:#666" alt="Second slide image">
+	      {% if art|length > 0 %}         
+	      <img src="{{ url_for('serve_image', image_id=art[0].image._id) }}" width="400" height="300">
+	      {% endif %}
+            
+              <div class="carousel-caption">
+		
+		<h4>{{owner}}'s</h4>
+		{% if art|length > 0 %}
+		<p>{{art[0].title}}</p>	   
+		{% endif %}	 
+	      </div>
+            </div>           
+	  </div>
+          
 	  {% if art|length > 1 %}
 	  <div class="item">         
 	    <div class=image-item>
