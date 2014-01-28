@@ -101,16 +101,13 @@ def changeinfo():
 def me():
     #show the user profile for that user
     if 'username' in session:
-        obj = img.find(user=session['username'])
-        art = []
-        for i in obj:
-            try:
-                art.append(i.image)
-            except:
-                pass
+        art = img.find(user=session['username'])
         x = u.find_one(username=session['username'])
-        propic = x.pic
-        return render_template('profile.html', user = session['username'], owner = session['username'],art=obj, propic = propic)
+        try:
+            propic = x.pic
+            return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
+        except:
+            return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
     else:
         return redirect(url_for('home'))
 
