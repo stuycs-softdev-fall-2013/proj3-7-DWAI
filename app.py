@@ -109,7 +109,7 @@ def me():
                 pass
         x = u.find_one(username=session['username'])
         propic = x.pic
-        return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
+        return render_template('profile.html', user = session['username'], owner = session['username'],art=obj, propic = propic)
     else:
         return redirect(url_for('home'))
 
