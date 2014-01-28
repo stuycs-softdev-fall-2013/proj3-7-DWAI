@@ -35,7 +35,8 @@ var canvasScript = function(){
 
 	document.getElementById('undo').addEventListener("click",undo);
 	document.getElementById('redo').addEventListener("click",redo);
-	//$('.save').addEventListener("click,save);
+	//document.getElementById('save').addEventListener("click",save);
+	//document.getElementById('delete').addEventListener("click",delete);
 
 	
 	stage.addChild(drawingCanvas);
@@ -113,7 +114,7 @@ var canvasScript = function(){
 	    img: canvas.toDataURL()
 	};
 	jQuery.ajax({
-	    url:'http://localhost:5000/canvas#save', //What is this supposed to be?
+	    url:'http://localhost:5000/canvas',
 	    type: 'POST',
 	    cache: false,
 	    data: JSON.stringify(savestuff),
