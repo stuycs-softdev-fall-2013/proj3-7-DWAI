@@ -35,7 +35,8 @@ var canvasScript = function(){
 
 	document.getElementById('undo').addEventListener("click",undo);
 	document.getElementById('redo').addEventListener("click",redo);
-	//$('.save').addEventListener("click,save);
+	//document.getElementById('save').addEventListener("click",save);
+	//document.getElementById('delete').addEventListener("click",delete);
 
 	
 	stage.addChild(drawingCanvas);
@@ -63,13 +64,17 @@ var canvasScript = function(){
     }
 
     var handleMouseUp = function() {
-	console.log(strokes);
 	isPenDown = false;
-	strokes.push({
-	    pensize: penWidth,
-	    color: penColor,
-	    path: currentPath
-	});
+	if(currentPath.length != 0){
+	    strokes.push({
+		pensize: penWidth,
+		color: penColor,
+		path: currentPath
+	    });
+}
+	currentPath = [];
+	console.log("Strokes");
+	console.log(strokes);
     }
     var handleMouseDown = function() {
 	currentPath = [];
@@ -94,14 +99,11 @@ var canvasScript = function(){
 	stage.update();
     }
     var undo = function(){
-	strokes.pop(); //Needed b.c its randomly adding an empty stroke
 	undostroke = strokes.pop();
-	console.log(strokes);
 	redrawAll(strokes);
 	redoStack.push(undostroke);
     }
     var redo = function(){
-	strokes.pop(); //Needed b.c its randomly adding an empty stroke
 	var redostroke = redoStack.pop();
 	if(redostroke){
 	    strokes.push(redostroke);
@@ -113,7 +115,7 @@ var canvasScript = function(){
 	    img: canvas.toDataURL()
 	};
 	jQuery.ajax({
-	    url:'http://localhost:5000/canvas#save', //What is this supposed to be?
+	    url:'http://localhost:5000/canvas',
 	    type: 'POST',
 	    cache: false,
 	    data: JSON.stringify(savestuff),

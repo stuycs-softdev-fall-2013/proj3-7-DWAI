@@ -15,8 +15,8 @@ app.secret_key = "my secret key"
 @app.route('/', methods = ['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        username = request.form['Username']
-        password = request.form['Password']
+        username = request.form['Username'].encode("utf8")
+        password = request.form['Password'].encode("utf8")
         if u.authenticate(username=username,password=password):
             session['username'] = username
             return render_template('index.html', user = username)
@@ -27,8 +27,7 @@ def home():
     else:
         user = session['username']
         return render_template('index.html', user=user)
-
-
+    
 @app.route('/register',methods=['GET','POST'])
 def register():
     if 'username' in session:
@@ -101,7 +100,13 @@ def changeinfo():
 def me():
     #show the user profile for that user
     if 'username' in session:
-        art = img.find(user=session['username'])
+        obj = img.find(user=session['username'])
+        art = []
+        for i in obj:
+            try:
+                art.append(i.image)
+            except:
+                pass
         x = u.find_one(username=session['username'])
         propic = x.pic
         return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
