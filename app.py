@@ -39,6 +39,7 @@ def homepage(e):
     else:
         user = session['username']
         return render_template('index.html', user=user, error=error)
+   
         
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -53,6 +54,7 @@ def register():
     session['username'] = request.form['username']
     u.insert(username=request.form['username'], password=request.form['password'])
     return redirect(url_for('home'))
+
 
 @app.route('/login/<e>',methods=['GET','POST'])
 def login(e):
@@ -108,6 +110,7 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
+
 @app.route('/me')
 def me():
     #show the user profile for that user
@@ -121,6 +124,7 @@ def me():
             return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
     else:
         return redirect(url_for('login',e='Please log in to access the page'))
+
 
 @app.route('/profile/<name>')
 def profile(name):
@@ -139,6 +143,7 @@ def profile(name):
     else:
         return redirect(url_for('homepage',e='User does not exist'))
 
+
 @app.route('/canvas', methods=['GET','POST'])
 def canvas():
     if 'username' in session:
@@ -150,6 +155,7 @@ def canvas():
         return render_template('canvaspg.html', user=session['username'])
     else:
         return redirect(url_for('login',e='Please log in to access page'))
+
 
 @app.route('/changepic', methods=['GET','POST'])
 def changepic():
@@ -163,6 +169,7 @@ def changepic():
         x.change_propic(f)
         return redirect(url_for('me'))
 
+
 @app.route('/upload',methods=['GET','POST'])
 def upload():
     if 'username' not in session:
@@ -175,12 +182,14 @@ def upload():
         x.change_image(f)
         return redirect(url_for('me'))
 
+
 @app.route('/_image/<image_id>')
 def serve_image(image_id):
     image = models.fs.get(ObjectId(image_id))
     data = image.read()
     image.close()
     return data
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
