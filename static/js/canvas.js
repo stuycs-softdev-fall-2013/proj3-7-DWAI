@@ -24,7 +24,8 @@ var canvasScript = function(){
 	drawingCanvas = new createjs.Shape();
 	isPenDown = false;
 	strokes=[];
-	redoStack = [];
+	currentPath=[];
+	redoStack=[];
 
 	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
 	oldMidPt = new createjs.Point(stage.mouseX, stage.mouseY);
@@ -35,7 +36,7 @@ var canvasScript = function(){
 
 	document.getElementById('undo').addEventListener("click",undo);
 	document.getElementById('redo').addEventListener("click",redo);
-	//document.getElementById('save').addEventListener("click",save);
+	document.getElementById('save').addEventListener("click",save);
 	//document.getElementById('delete').addEventListener("click",delete);
 
 	
@@ -71,10 +72,8 @@ var canvasScript = function(){
 		color: penColor,
 		path: currentPath
 	    });
-}
+	}
 	currentPath = [];
-	console.log("Strokes");
-	console.log(strokes);
     }
     var handleMouseDown = function() {
 	currentPath = [];
@@ -114,13 +113,22 @@ var canvasScript = function(){
 	var savestuff = {
 	    img: canvas.toDataURL()
 	};
+	var onSuccess = function(response){
+	    console.debug('response',reponse);
+	}
+	var onError = function(r,textStatus,errorThrown){
+	    console.debug('error',textStatus + ", " + errorThrown + ":\n" + r.responseText);
+	}
+	console.log(savestuff);
 	jQuery.ajax({
 	    url:'http://localhost:5000/canvas',
 	    type: 'POST',
 	    cache: false,
 	    data: JSON.stringify(savestuff),
 	    contentType: 'application/json',
-	    processData: false
+	    processData: false,
+	    success: onSuccess,
+	    error: onError
 	});
     }
     var getPenWidth = function(){

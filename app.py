@@ -1,6 +1,7 @@
 #!/usr/local/bin/python
 from flask import Flask, render_template, session, redirect, request, url_for
 import json
+import sys
 from bson import ObjectId
 from models import User, Image, Collection
 
