@@ -21,7 +21,8 @@ def homepage(e):
     if request.method == "POST":
         wd = request.form["width"]
         ht = request.form["height"]
-        return render_template('canvaspg.html', Width = wd, Height = ht)
+        redirect (url_for('canvas', width=wd, height=ht))
+
     if e == ' ':
         error=None
     else:
@@ -122,6 +123,7 @@ def me():
     else:
         return redirect(url_for('login',e='Please log in to access the page'))
 
+
 @app.route('/profile/<name>')
 def profile(name):
     if u.exists(name):
@@ -139,15 +141,16 @@ def profile(name):
     else:
         return redirect(url_for('homepage',e='User does not exist'))
 
+
 @app.route('/canvas', methods=['GET','POST'])
-def canvas():
+def canvas(width, height):
     if 'username' in session:
         #Don't know if this works
         if request.method == 'POST':
             requestimg = json.load(sys.stdin)
             i = img.insert(user=session['username'],title=request.form['title'])
             i.change_image(requestimg)
-        return render_template('canvaspg.html', user=session['username'])
+        return render_template('canvaspg.html', user=session['username'], Width=width, Height=height)
     else:
         return redirect(url_for('login',e='Please log in to access page'))
 
