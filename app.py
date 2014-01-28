@@ -18,6 +18,14 @@ def home():
 
 @app.route('/<e>', methods = ['GET', 'POST'])
 def homepage(e):
+    if request.method == "POST":
+        wd = request.form["width"]
+        ht = request.form["height"]
+        return render_template('canvaspg.html', Width = wd, Height = ht)
+    if e == ' ':
+        error=None
+    else:
+        error = e
 #    if request.method == 'POST':
 #        username = request.form['Username'].encode("utf8")
 #        password = request.form['Password'].encode("utf8")
@@ -26,29 +34,12 @@ def homepage(e):
 #            return render_template('index.html', user = username)
 #        else:
 #            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
-    if request.method == "POST":
-        wd = request.form["width"]
-        ht = request.form["height"]
-        return render_template('canvaspg.html', Width = wd, Height = ht)
-
-    if e == ' ':
-        error=None
-    else:
-        error = e
-    if request.method == 'POST':
-        username = request.form['Username'].encode("utf8")
-        password = request.form['Password'].encode("utf8")
-        if u.authenticate(username=username,password=password):
-            session['username'] = username
-            return render_template('index.html', user = username)
-        else:
-            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
     if not 'username' in session:
         return render_template('index.html', user=None, error=error)
     else:
         user = session['username']
         return render_template('index.html', user=user, error=error)
-    
+        
 @app.route('/register',methods=['GET','POST'])
 def register():
     if 'username' in session:
