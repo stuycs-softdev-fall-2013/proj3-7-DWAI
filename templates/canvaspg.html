@@ -105,13 +105,13 @@
       </script>
 
       <script>
-	function printValue("sliderId", "textbox") {
-	var x = document.getElementById("textbox");
-	var y = document.getElementById("sliderId");
-	x.value = y.value;
+	function printValue() {
+	var x = document.getElementById("penslide");
+	var y = document.getElementById("pensizer");
+	x.innerHTML = "Pensize: " + y.value;
 	}
 
-	window.onload = function() { printValue("pensizer", "rangeValue"); }	
+	window.onload = function() { printValue(); }	
       </script>
       
 {% endblock %}

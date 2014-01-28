@@ -47,10 +47,9 @@ var canvasScript = function(){
 
     var pen = function(event) {
         var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
-        
+        penWidth = getPenWidth();
+        penColor = getPenColor();
         if(isPenDown){
-            penWidth = getPenWidth();
-            penColor = getPenColor();
             drawingCanvas.graphics.clear().setStrokeStyle(penWidth, 'round', 'round').beginStroke(penColor).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
             currentPath.push(midPt);
         }
@@ -110,7 +109,9 @@ var canvasScript = function(){
         }
     }
     var getPenWidth = function(){
-        return document.getElementById("pensizer").value;
+	var size = document.getElementById("pensizer").value;
+        document.getElementById("penslide").innerHTML = "Pensize: " + size;
+	return size;
     }
     var getPenColor = function(){
         return document.getElementById("pencolor").value;
