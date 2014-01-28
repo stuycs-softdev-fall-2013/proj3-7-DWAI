@@ -27,10 +27,13 @@
          
 	  <div class="item active">         
 	    <div class=image-item>
-	      <img data-src="holder.js/400x150/auto/#666:#666" alt="Second slide image">
+	     
 	      {% if art|length > 0 %}         
 	      <img src="{{ url_for('serve_image', image_id=art[0].image._id) }}" width="400" height="300">
-	      {% endif %}
+	      {% else %}
+	      <img data-src="holder.js/400x150/auto/#666:#666" alt="Second slide image">
+	      
+ {% endif %}
             
               <div class="carousel-caption">
 		
@@ -107,10 +110,30 @@ Images in Gallery: {{art|length}}
   <div class="thumbnail">
     <img src="{{ url_for('serve_image', image_id=img.image._id) }}" alt="Generic placeholder thumbnail" width="400" height="300">
     <div class="caption">
-      <h3>{{img.title}}</h3>
+      <h3>{{img.title}}
+       <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#myModal">Full size &raquo;</a></h3>
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">{{img.title}}</h4>
+                </div>
+                <div class="modal-body">
+		  <img src="{{ url_for('serve_image', image_id=img.image._id) }}">       
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+
     </div>
   </div>
-  </div>
+</div>
 {% endfor %}
       
 
