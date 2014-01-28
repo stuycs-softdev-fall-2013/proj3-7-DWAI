@@ -137,19 +137,29 @@ def canvas():
     else:
         return redirect(url_for('login',e='Please log in to use canvas'))
 
-#sample image code
 @app.route('/changepic', methods=['GET','POST'])
 def changepic():
     if 'username' not in session:
         return redirect(url_for('home'))
     if request.method == 'GET':
         return render_template('changepic.html', user = session['username'])
-    if request.method == 'POST':
+    else:
         x = u.find_one(username = session['username'])
         f = request.files['file']
         x.change_propic(f)
         return redirect(url_for('me'))
-    return render_template('changepic.html', user= session['username'])
+
+@app.route('/upload',methods=['GET','POST'])
+def upload():
+    if 'username' not in session:
+        return redirect(url_for('home'))
+    if request.method == 'GET':
+        return render_template('upload.html', user = session['username'])
+    else:
+        x = img.insert(user = session['username'], title = request.form['img_title'])
+        f = request.files['file']
+        x.change_image(f)
+        return redirect(url_for('me'))
 
 @app.route('/_image/<image_id>')
 def serve_image(image_id):
