@@ -40,6 +40,7 @@ def homepage(e):
     else:
         user = session['username']
         return render_template('index.html', user=user, error=error)
+   
         
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -55,6 +56,7 @@ def register():
     u.insert(username=request.form['username'], password=request.form['password'])
     return redirect(url_for('home'))
 
+
 @app.route('/login/<e>',methods=['GET','POST'])
 def login(e):
     if e == ' ':
@@ -62,7 +64,7 @@ def login(e):
     else:
         error = e
     if 'username' in session:
-        return redirect(url_for('homepage',e='You area already logged in'))
+        return redirect(url_for('homepage',e='You are already logged in'))
     if request.method == 'GET':
         return render_template('login.html', error=error)
     if not u.authenticate(request.form['username'],request.form['password']):
@@ -109,6 +111,7 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
+
 @app.route('/me')
 def me():
     #show the user profile for that user
@@ -154,6 +157,7 @@ def canvas(width, height):
     else:
         return redirect(url_for('login',e='Please log in to access page'))
 
+
 @app.route('/changepic', methods=['GET','POST'])
 def changepic():
     if 'username' not in session:
@@ -165,6 +169,7 @@ def changepic():
         f = request.files['file']
         x.change_propic(f)
         return redirect(url_for('me'))
+
 
 @app.route('/upload',methods=['GET','POST'])
 def upload():
@@ -178,12 +183,14 @@ def upload():
         x.change_image(f)
         return redirect(url_for('me'))
 
+
 @app.route('/_image/<image_id>')
 def serve_image(image_id):
     image = models.fs.get(ObjectId(image_id))
     data = image.read()
     image.close()
     return data
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
