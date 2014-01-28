@@ -124,9 +124,9 @@ def canvas():
     if 'username' in session:
         #Don't know if this works
         if request.method == 'POST':
-            request = json.load(sys.stdin)
+            requestimg = json.load(sys.stdin)
             i = img.insert(user=session['username'],title=request.form['title'])
-            i.change_image(request)
+            i.change_image(requestimg)
         return render_template('canvaspg.html', user=session['username'])
     else:
         return redirect(url_for('login',e='Please log in to use canvas'))
