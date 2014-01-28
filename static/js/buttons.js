@@ -1,6 +1,6 @@
 var buttonsScript = function(){
     
-    var width, height;
+    /*var width, height;
     
     document.getElementById("create").addEventListener("click", moveToCanvas); 
     
@@ -9,11 +9,12 @@ var buttonsScript = function(){
 	height = document.getElementById("height").value;
 	window.location="/canvas";
    }
-
+    */
     document.getElementById("delete").addEventListener("click", deleteCanvas);
 
     var deleteCanvas = function(){
 	window.alert("Are you sure you wanna delete this?")
+    }
 }();
 
 
