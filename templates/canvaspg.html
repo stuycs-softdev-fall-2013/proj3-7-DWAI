@@ -49,8 +49,9 @@
 	      <input type="color" id="pencolor" name="pencolor">
 
 	      <label type="text" id="penslide">Pen size: </label>
-	      <input id="pensizer" type="range" name="pensize" min="1" max="100" value="50">
-	      
+	      <input id="pensizer" type="range" name="pensize" min="1" max="100" value="25">
+	      <input id="rangeValue" type="text" size="3" value="">
+
 	    </form>
 	  </div> <!-- navbar -->
 
@@ -74,7 +75,7 @@
 
 
       <center>
-	<canvas id="cvs" width="width" height="height" style="border:1px solid #d3d3d3;">
+	<canvas id="cvs" width="{{ Width }}" height="{{ Height }}" style="border:1px solid #d3d3d3;">
 	  Your browser does not support the HTML5 canvas tag.</canvas>
       </center>
 
@@ -114,6 +115,16 @@
 	}
       </script>
 
+      <script>
+	function printValue("sliderId", "textbox") {
+	var x = document.getElementById("textbox");
+	var y = document.getElementById("sliderId");
+	x.value = y.value;
+	}
+
+	window.onload = function() { printValue("pensizer", "rangeValue"); }	
+      </script>
+      
 {% endblock %}
       
 </html>

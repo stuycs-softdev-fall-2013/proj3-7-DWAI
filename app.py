@@ -14,14 +14,18 @@ app.secret_key = "my secret key"
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
-    if request.method == 'POST':
-        username = request.form['Username'].encode("utf8")
-        password = request.form['Password'].encode("utf8")
-        if u.authenticate(username=username,password=password):
-            session['username'] = username
-            return render_template('index.html', user = username)
-        else:
-            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
+#    if request.method == 'POST':
+#        username = request.form['Username'].encode("utf8")
+#        password = request.form['Password'].encode("utf8")
+#        if u.authenticate(username=username,password=password):
+#            session['username'] = username
+#            return render_template('index.html', user = username)
+#        else:
+#            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
+    if request.method == "POST":
+        wd = request.form["width"]
+        ht = request.form["height"]
+        return render_template('canvaspg.html', Width = wd, Height = ht)
     if not 'username' in session:
         return render_template('index.html', user=None)
     else:
