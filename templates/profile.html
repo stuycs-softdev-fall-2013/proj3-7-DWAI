@@ -27,10 +27,13 @@
          
 	  <div class="item active">         
 	    <div class=image-item>
-	      <img data-src="holder.js/400x150/auto/#666:#666" alt="Second slide image">
+	     
 	      {% if art|length > 0 %}         
 	      <img src="{{ url_for('serve_image', image_id=art[0].image._id) }}" width="400" height="300">
-	      {% endif %}
+	      {% else %}
+	      <img data-src="holder.js/400x150/auto/#666:#666" alt="Second slide image">
+	      
+ {% endif %}
             
               <div class="carousel-caption">
 		
