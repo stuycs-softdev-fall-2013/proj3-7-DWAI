@@ -39,7 +39,12 @@
             <img data-src="holder.js/400x300/auto/#666:#666" alt="Second slide image">
             <div class="carousel-caption">
               <h4>Gallery</h4>
-              <p>Name of piece</p>
+	      {% if art.length > 1 %}
+              <div class=image-item>
+                <img src="{{ url_for('serve_image', image_id=art[1]._id) }}">
+              </div>
+              <p>{{art[1].title}}</p>
+              {% endif %}
             </div>
           </div>
           <div class="item">
