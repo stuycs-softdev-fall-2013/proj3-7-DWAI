@@ -91,7 +91,8 @@
 	  {% else %}
           <ul class="nav navbar-nav navbar-right">
 	    <li class="dropdown">
-	      <a href="{{url_for('me')}}" class="dropdown-toggle active" data-toggle="dropdown">{{user}}
+	      <a href="{{url_for('me')}}" class="dropdown-toggle active" data-toggle="dropdown">
+	      	<span class="glyphicon glyphicon-star"> {{user}} </span>
 		<b class="caret"></b>
 	      </a>
 	      <ul class="dropdown-menu">
