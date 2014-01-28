@@ -4,6 +4,7 @@ import json
 import sys
 from bson import ObjectId
 from models import User, Image, Collection
+import itertools
 
 u = User()
 img = Image()
@@ -27,6 +28,7 @@ def homepage(e):
         error=None
     else:
         error = e
+
 #    if request.method == 'POST':
 #        username = request.form['Username'].encode("utf8")
 #        password = request.form['Password'].encode("utf8")
@@ -35,13 +37,21 @@ def homepage(e):
 #            return render_template('index.html', user = username)
 #        else:
 #            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
+
+    #pics = img.get_by_date
+    #art = []
+    #for im in pics:
+    #    art.append(im.image)
+    #pics = art[:3]
+
     if not 'username' in session:
-        return render_template('index.html', user=None, error=error)
+        return render_template('index.html', user=None, error=error) #pics=pics)
     else:
         user = session['username']
-        return render_template('index.html', user=user, error=error)
-   
-        
+
+        return render_template('index.html', user=user, error=error) #pics=pics)
+    
+
 @app.route('/register',methods=['GET','POST'])
 def register():
     if 'username' in session:
@@ -182,6 +192,14 @@ def upload():
         f = request.files['file']
         x.change_image(f)
         return redirect(url_for('me'))
+
+
+@app.route('/image/<user>/<title>')
+def imagepg(user,title):
+    pic = img.find_one(user=user,title=title)
+    if pic is not None:
+        return render_template('imagepg.html', pic=pic)
+    return redirect(url_for('homepage',e="Page does not exist"))
 
 
 @app.route('/_image/<image_id>')

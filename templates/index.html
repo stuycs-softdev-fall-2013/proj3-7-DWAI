@@ -28,7 +28,45 @@
           <li data-target="#carousel-example-captions" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-          <div class="item active">
+          {% if pics %}
+	 
+	  {% if pics > 1 %}
+          <div class="item">         
+            <div class=image-item>
+              <img src="{{ url_for('serve_image', image_id=pics[0].image._id) }}" width="400" height="300">
+            </div>
+            <div class="carousel-caption">
+              <h4>Gallery</h4>
+              <p>{{pics[0].title}}</p>           
+            </div>
+          </div>           
+          {% endif %}
+	  
+	  {% if pics|length > 1 %}
+          <div class="item">         
+            <div class=image-item>
+              <img src="{{ url_for('serve_image', image_id=pics[1].image._id) }}" width="400" height="300">
+            </div>
+            <div class="carousel-caption">
+              <h4>Gallery</h4>
+              <p>{{pics[1].title}}</p>           
+            </div>
+          </div>           
+          {% endif %}
+
+          {% if pics|length > 2 %}
+          <div class="item">         
+            <div class=image-item>
+              <img src="{{ url_for('serve_image', image_id=pics[2].image._id) }}" width="400" height="300">
+            </div>
+            <div class="carousel-caption">
+              <h4>Highlights</h4>
+              <p>{{pics[2].title}}</p>           
+            </div>
+          </div>           
+          {% endif %}
+       {% else %}
+	  <div class="item active">
             <img data-src="holder.js/900x500/auto/#777:#777" alt="First slide image">
             <div class="carousel-caption">
               <h3>First slide label</h3>
@@ -49,6 +87,7 @@
               <p>caption hehehe</p>
             </div>
           </div>
+	  {% endif %}
         </div>
         <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
           <span class="glyphicon glyphicon-chevron-left"></span>
