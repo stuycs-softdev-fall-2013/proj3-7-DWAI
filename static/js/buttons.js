@@ -10,6 +10,11 @@ var buttonsScript = function(){
 	window.location="/canvas";
    }
 
+    document.getElementById("delete").addEventListener("click", deleteCanvas);
+
+    var deleteCanvas = function(){
+	window.alert("Are you sure you wanna delete this?")
 }();
+
 
 buttonScript();

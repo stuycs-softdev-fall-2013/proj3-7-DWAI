@@ -57,10 +57,10 @@
 	  <div class="nav navbar-nav navbar-right"> 
 	    <form method="POST" role="form" class="navbar-form">
             
-	      <button type="button" class="btn btn-success" id="save">
+	      <button type="button" class="btn btn-success" id="save" onClick="saveCanvas()">
 	      <span class="glyphicon glyphicon-save"></span> Save
 	    </button>
-	    <button type="button" class="btn btn-danger" id="delete">
+	    <button type="button" class="btn btn-danger" id="delete" onClick="deleteCanvas()">
 	      <span class="glyphicon glyphicon-trash"></span> Delete
 	    </button>
 	    
@@ -91,6 +91,27 @@
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
       <script src="../static/js/bootstrap.min.js"></script>
       
+      <!--<p id="demo"></p>-->
+      <script>
+	function deleteCanvas()
+	{
+	var x;
+	var r=confirm("Are you sure you want to delete this canvas?");
+	if (r==true) { window.location.href="/canvas"; }
+	else { x="No I don't want to delete it!!"; }
+	<!--document.getElementById("demo").innerHTML=x;-->
+	}
+      </script>
+
+      <script>
+	function saveCanvas() {
+
+	var title=prompt("Name your drawing:","Title");
+	if (title!=null) { window.location.href="/me"; }
+	<!-- save title name, redirects to gallery -->
+	
+	}
+      </script>
 {% endblock %}
       
 </html>
