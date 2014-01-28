@@ -63,7 +63,7 @@ def login(e):
     else:
         error = e
     if 'username' in session:
-        return redirect(url_for('homepage',e='You area already logged in'))
+        return redirect(url_for('homepage',e='You are already logged in'))
     if request.method == 'GET':
         return render_template('login.html', error=error)
     if not u.authenticate(request.form['username'],request.form['password']):
