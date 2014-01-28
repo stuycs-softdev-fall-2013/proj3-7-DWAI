@@ -1,17 +1,24 @@
 # Models and Collections for images
 from datetime import datetime
 from models.base import Collection, Model
-from models.review import Comment
+from models.comment import Comment
 from models.tag import Tag
 
 
 ''' Format for an insert would be:
-    image.insert(user=...,image=...)
+    i = image.insert(user=...,title=...)
+    i.change_image(image_file=...)
 '''
 class ImageModel(Model):
 
     def __init__(self, db, fs, collection, obj):
-        super(CartModel, self).__init__(db, fs, collection, obj)
+        super(ImageModel, self).__init__(db, fs, collection, obj)
+
+    def change_image(self, image_file):
+        image_id = self.fs.put(image_file.read())
+        img = {'_id' : image_id}
+        self.image = img
+        self.save()
 
     # Adds tag to image
     def add_tag(self, label):

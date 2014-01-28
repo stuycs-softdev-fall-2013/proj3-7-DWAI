@@ -24,7 +24,7 @@
     </div>
     <div class="navbar-collapse collapse">
           <div class="nav navbar-nav">
-	    <form class="navbar-form">
+	    <form method="POST" class="navbar-form">
 	      <button type="button" class="btn btn-default" id="undo">
 		<span class="glyphicon glyphicon-arrow-left"></span> Undo
 	      </button>
@@ -49,13 +49,13 @@
 	      <input type="color" id="pencolor" name="pencolor">
 
 	      <label type="text" id="penslide">Pen size: </label>
-	      <input id="penslide" type="range" name="pensize" min="1" max="100" value="50">
+	      <input id="pensizer" type="range" name="pensize" min="1" max="100" value="50">
 	      
 	    </form>
 	  </div> <!-- navbar -->
 
 	  <div class="nav navbar-nav navbar-right"> 
-	    <form class="navbar-form">
+	    <form method="POST" role="form" class="navbar-form">
             
 	      <button type="button" class="btn btn-success" id="save">
 	      <span class="glyphicon glyphicon-save"></span> Save

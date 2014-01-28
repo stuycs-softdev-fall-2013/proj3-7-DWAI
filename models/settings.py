@@ -5,6 +5,8 @@ SECRET_KEY = "my super secret key"
 DB_NAME = 'backend'
 COLLECTIONS = {
         'User': 'users',
+        'Comment' : 'comments',
+        'Image' : 'images',
         'Tag': 'tags',
         'Collection': 'ignore'
         }

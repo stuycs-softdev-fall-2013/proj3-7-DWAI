@@ -48,16 +48,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="./" class="navbar-brand" >Google Paint</a>
+          <a href="{{url_for('home')}}" class="navbar-brand" >Google Paint</a>
         </div>
 
 	<div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">  
 	  <ul class="nav navbar-nav">
 	    <!-- HOME ABOUT CONTACT -->
-            <li><a href="./">
+            <li><a href="{{url_for('home')}}">
 		<span class="glyphicon glyphicon-home"> Home</span></a>
 	    </li>
-	    <li><a href="./canvas">
+	    <li><a href="{{url_for('canvas')}}">
 		<span class="glyphicon glyphicon-pencil"> Canvas</span></a>
 	    </li>
 	
@@ -65,11 +65,11 @@
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 		<span class="glyphicon glyphicon-wrench"> Options <b class="caret"></b></a>
 	      <ul class="dropdown-menu">
-		<li><a href="./login">Login</a></li>
-		<li><a href="./register">Register</a></li>
+		<li><a href="{{url_for('login',e=' ')}}">Login</a></li>
+		<li><a href="{{url_for('register')}}">Register</a></li>
 		<li class="divider"></li>
 		<li class="dropdown-header">Settings</li>
-		<li><a href="./changeinfo">Change Info</a></li>
+		<li><a href="{{url_for('changeinfo')}}">Change Info</a></li>
 	      </ul>
 	    </li>
           </ul>
@@ -84,24 +84,29 @@
 	      <input type="password" placeholder="Password" id="Password" class="form-control">
 	    </div>
 	    <button type="submit" class="btn btn-success">Sign in</button>
-	    <button type="button" class="btn btn-default" onClick="window.location.href='/register'">Register</button>
+	    <button type="button" class="btn btn-default" onClick="window.location.href='{{url_for('register')}}'">Register</button>
 	  </form>
 	  
 	  <!-- IF LOGGED IN: PROFILE, SETTINGS, LOGOUT -->
 	  {% else %}
           <ul class="nav navbar-nav navbar-right">
 	    <li class="dropdown">
-	      <a href="./profile" class="dropdown-toggle active" data-toggle="dropdown">
-		<span class="glyphicon glyphicon-star"> {{user}} <b class="caret"></b></a>
+	      <a href="{{url_for('me')}}" class="dropdown-toggle active" data-toggle="dropdown">
+	      	<span class="glyphicon glyphicon-star"> {{user}} </span>
+		<b class="caret"></b>
+	      </a>
 	      <ul class="dropdown-menu">
-		<li><a href="./profile">
+		<li><a href="{{url_for('me')}}">
 		    <span class="glyphicon glyphicon-user"> Profile</span></a>
 		</li> 
-                <li><a href="./changeinfo">
+                <li><a href="{{url_for('changeinfo')}}">
 		    <span class="glyphicon glyphicon-cog"> Settings</span></a>
                 </li>
+                <li><a href="{{url_for('changepic')}}">
+		    <span class="glyphicon glyphicon-cog"> Change Profile Pic</span></a>
+		  </li>
                 <li class="divider"></li>
-                <li><a href="./logout">Logout</a></li>
+                <li><a href="{{url_for('logout')}}">Logout</a></li>
               </ul>
             </li>
           </ul>
