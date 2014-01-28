@@ -117,7 +117,7 @@ def profile(name):
     else:
         return redirect(url_for('home'))
 
-@app.route('/canvas')
+@app.route('/canvas', methods=['GET','POST'])
 def canvas():
     if 'username' in session:
         #Don't know if this works
