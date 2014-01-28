@@ -1,6 +1,7 @@
 #!/usr/local/bin/python
 from flask import Flask, render_template, session, redirect, request, url_for
 import json
+import sys
 from bson import ObjectId
 from models import User, Image, Collection
 
@@ -11,9 +12,12 @@ models = Collection()
 app = Flask(__name__)
 app.secret_key = "my secret key"
 
-
-@app.route('/', methods = ['GET', 'POST'])
+@app.route('/')
 def home():
+    return redirect(url_for('homepage',e=' '))
+
+@app.route('/<e>', methods = ['GET', 'POST'])
+def homepage(e):
 #    if request.method == 'POST':
 #        username = request.form['Username'].encode("utf8")
 #        password = request.form['Password'].encode("utf8")
@@ -26,16 +30,29 @@ def home():
         wd = request.form["width"]
         ht = request.form["height"]
         return render_template('canvaspg.html', Width = wd, Height = ht)
+
+    if e == ' ':
+        error=None
+    else:
+        error = e
+    if request.method == 'POST':
+        username = request.form['Username'].encode("utf8")
+        password = request.form['Password'].encode("utf8")
+        if u.authenticate(username=username,password=password):
+            session['username'] = username
+            return render_template('index.html', user = username)
+        else:
+            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
     if not 'username' in session:
-        return render_template('index.html', user=None)
+        return render_template('index.html', user=None, error=error)
     else:
         user = session['username']
-        return render_template('index.html', user=user)
+        return render_template('index.html', user=user, error=error)
     
 @app.route('/register',methods=['GET','POST'])
 def register():
     if 'username' in session:
-        return redirect(url_for('home'))
+        return redirect(url_for('homepage', e='You are already logged in'))
     if request.method == 'GET':
         return render_template('register.html')
     if request.form['password'] != request.form['confirm']:
@@ -48,12 +65,12 @@ def register():
 
 @app.route('/login/<e>',methods=['GET','POST'])
 def login(e):
-    if e is not None:
-        error = e
+    if e == ' ':
+        error = None
     else:
-        error = ""
+        error = e
     if 'username' in session:
-        return redirect(url_for('home'))
+        return redirect(url_for('homepage',e='You area already logged in'))
     if request.method == 'GET':
         return render_template('login.html', error=error)
     if not u.authenticate(request.form['username'],request.form['password']):
@@ -73,7 +90,7 @@ def logout():
 @app.route('/changeinfo', methods=['GET', 'POST'])
 def changeinfo():
     if 'username' not in session:
-        return redirect(url_for('home'))
+        return redirect(url_for('login',e='Please log in to access the page'))
     if request.method == 'GET':
         return render_template('changeinfo.html',user=session['username'])
     x = u.find_one(username=session['username'])
@@ -104,29 +121,32 @@ def changeinfo():
 def me():
     #show the user profile for that user
     if 'username' in session:
-        obj = img.find(user=session['username'])
-        art = []
-        for i in obj:
-            try:
-                art.append(i.image)
-            except:
-                pass
+        art = img.find(user=session['username'])
         x = u.find_one(username=session['username'])
-        propic = x.pic
-        return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
+        try:
+            propic = x.pic
+            return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
+        except:
+            return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
     else:
-        return redirect(url_for('home'))
+        return redirect(url_for('login',e='Please log in to access the page'))
 
 @app.route('/profile/<name>')
 def profile(name):
     if u.exists(name):
         art = img.find(user=name)
         if 'username' in session:
-            return render_template('profile.html', user = session['username'], owner = name,art=art)
+            user=session['username']
         else:
-            return render_template('profile.html', user= None, owner = name,art=art)
+            user=None
+        x = u.find_one(username=name)
+        try:
+            propic = x.pic
+            return render_template('profile.html', user = user, owner = name,art=art, propic = propic)
+        except:
+            return render_template('profile.html', user = user, owner = name,art=art)
     else:
-        return redirect(url_for('home'))
+        return redirect(url_for('homepage',e='User does not exist'))
 
 @app.route('/canvas', methods=['GET','POST'])
 def canvas():
@@ -138,21 +158,31 @@ def canvas():
             i.change_image(requestimg)
         return render_template('canvaspg.html', user=session['username'])
     else:
-        return redirect(url_for('login',e='Please log in to use canvas'))
+        return redirect(url_for('login',e='Please log in to access page'))
 
-#sample image code
 @app.route('/changepic', methods=['GET','POST'])
 def changepic():
     if 'username' not in session:
-        return redirect(url_for('home'))
+        return redirect(url_for('login',e='Please log in to access the page'))
     if request.method == 'GET':
         return render_template('changepic.html', user = session['username'])
-    if request.method == 'POST':
+    else:
         x = u.find_one(username = session['username'])
         f = request.files['file']
         x.change_propic(f)
         return redirect(url_for('me'))
-    return render_template('changepic.html', user= session['username'])
+
+@app.route('/upload',methods=['GET','POST'])
+def upload():
+    if 'username' not in session:
+        return redirect(url_for('login',e='Please log in to access the page'))
+    if request.method == 'GET':
+        return render_template('upload.html', user = session['username'])
+    else:
+        x = img.insert(user = session['username'], title = request.form['img_title'])
+        f = request.files['file']
+        x.change_image(f)
+        return redirect(url_for('me'))
 
 @app.route('/_image/<image_id>')
 def serve_image(image_id):

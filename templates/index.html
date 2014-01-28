@@ -9,12 +9,18 @@
 
 {% block body %}
        <div class="row row-offcanvas row-offcanvas-right">
-      
       <div class="col-xs-12 col-sm-9">
 	<p class="pull-right visible-xs">
           <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
 	</p>
 	<div class="jumbotron">
+	  {% if error %}
+	  <div class="alert alert-danger alert-dismissible">
+	    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	    {{error}}
+	  </div>
+	  {% endif %}
+</center>
   <div id="carousel-example-captions" class="carousel slide container" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
@@ -55,36 +61,17 @@
 	</div>
 
 	<div class="row">
-          <div class="col-6 col-sm-6 col-lg-4">
-            <h2>Heading</h2>
-	    <p>pic here</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          <div class="col-3 col-lg-6">
+            <h2>A quick and easy online tool!</h2>
+	    <p>Users have access to our canvas, which includes basic functionality such as drawing, colors, pen sizes, undos and redos. All finished works can be saved in their personal galleries, to be accessed at a click of their mouse.</p>
+           
           </div><!--/span-->
-          <div class="col-6 col-sm-6 col-lg-4">
-            <h2>Heading</h2>
-            <p>pic here</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-          </div><!--/span-->
-          <div class="col-6 col-sm-6 col-lg-4">
-            <h2>Heading</h2>
-            <p>pic here</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-          </div><!--/span-->
-          <div class="col-6 col-sm-6 col-lg-4">
-            <h2>Heading</h2>
-            <p>pic here</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-          </div><!--/span-->
-          <div class="col-6 col-sm-6 col-lg-4">
-            <h2>Heading</h2>
-            <p>pic here</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-          </div><!--/span-->
-          <div class="col-6 col-sm-6 col-lg-4">
-            <h2>Heading</h2>
-            <p>pic here</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-          </div><!--/span-->
+          <div class="col-6 col-sm-6 col-lg-6">
+            <h2>Instantaneous Collaboration</h2>
+            <p>Users can draw with their friends by simultaneously working on the same canvas. </p>
+           
+	  </div>
+	  
         </div><!--/row-->
       </div><!--/span-->
 
@@ -127,10 +114,10 @@
 	</div>
 
 	<div class="list-group">
-          <a href="./profile/alvin" class="list-group-item ">Alvin's Profile</a>
-          <a href="./profile/vivian" class="list-group-item">Vivian's Profile</a>
-          <a href="./profile/michele" class="list-group-item">Michele's Profile</a>
-          <a href="./profile/judy" class="list-group-item">Judy's Profile</a>
+          <a href="/profile/alvin" class="list-group-item ">Alvin's Profile</a>
+          <a href="/profile/vivian" class="list-group-item">Vivian's Profile</a>
+          <a href="/profile/michele" class="list-group-item">Michele's Profile</a>
+          <a href="/profile/judy" class="list-group-item">Judy's Profile</a>
         </div>
       </div><!--/span-->
     </div><!--/row-->

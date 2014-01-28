@@ -2,10 +2,11 @@
 
 {% block body %}
 
-<h2>Upload Profile Picture</h2>
+<h2>Upload Image</h2>
 <form method=POST action=# enctype="multipart/form-data" class="pure-form image-form">
   <legend>Upload Image</legend>  
   <input type=file name=file value="Choose image">
+  <input type=text name=img_title placeholder="Image title">
   <button type="submit" name="btn" value="Upload" class="pure-button pure-button-primary pure-button-small">Upload</button>
 </form>
 
