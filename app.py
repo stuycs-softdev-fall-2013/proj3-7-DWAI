@@ -99,41 +99,50 @@ def changeinfo():
 @app.route('/me')
 def me():
     #show the user profile for that user
-    art = img.find(user=session['username'])
     if 'username' in session:
-        return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
+        art = img.find(user=session['username'])
+        x = u.find_one(username=session['username'])
+        propic = x.pic
+        return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
     else:
         return redirect(url_for('home'))
 
 @app.route('/profile/<name>')
 def profile(name):
-    art = img.find(user=name)
-    if 'username' in session:
-        return render_template('profile.html', user = session['username'], owner = name,art=art)
+    if u.exists(name):
+        art = img.find(user=name)
+        if 'username' in session:
+            return render_template('profile.html', user = session['username'], owner = name,art=art)
+        else:
+            return render_template('profile.html', user= None, owner = name,art=art)
     else:
-        return render_template('profile.html', user= None, owner = name,art=art)
+        return redirect(url_for('home'))
 
-@app.route('/canvas')
+@app.route('/canvas', methods=['GET','POST'])
 def canvas():
     if 'username' in session:
         #Don't know if this works
         if request.method == 'POST':
-            request = json.load(sys.stdin)
+            requestimg = json.load(sys.stdin)
             i = img.insert(user=session['username'],title=request.form['title'])
-            i.change_image(request)
+            i.change_image(requestimg)
         return render_template('canvaspg.html', user=session['username'])
     else:
         return redirect(url_for('login',e='Please log in to use canvas'))
 
 #sample image code
-@app.route('/test', methods=['GET','POST'])
-def test():
+@app.route('/changepic', methods=['GET','POST'])
+def changepic():
+    if 'username' not in session:
+        return redirect(url_for('home'))
+    if request.method == 'GET':
+        return render_template('changepic.html', user = session['username'])
     if request.method == 'POST':
+        x = u.find_one(username = session['username'])
         f = request.files['file']
-        i = img.insert(user=session['username'],title='x')
-        i.change_image(f)
-        return render_template('test.html', image=i.image)
-    return render_template('test.html')
+        x.change_propic(f)
+        return redirect(url_for('me'))
+    return render_template('changepic.html', user= session['username'])
 
 @app.route('/_image/<image_id>')
 def serve_image(image_id):
