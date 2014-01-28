@@ -57,7 +57,7 @@
             <li><a href="{{url_for('home')}}">
 		<span class="glyphicon glyphicon-home"> Home</span></a>
 	    </li>
-	    <li><a href="{{url_for('canvas')}}">
+	    <li><a href="{{url_for('canvas', width=1000, height=500)}}">
 		<span class="glyphicon glyphicon-pencil"> Canvas</span></a>
 	    </li>
 	
@@ -76,14 +76,16 @@
 	  
 	  <!-- USERNAME PASSWORD -->
 	  {% if not user %}
-	  <form class="navbar-form navbar-right" role="form" method="POST">
-	    <div class="form-group">
+	  <form class="navbar-form navbar-right" role="form">
+<!--	    <div class="form-group">
 	      <input type="text" placeholder="Username" id="Username" class="form-control">
 	    </div>
 	    <div class="form-group">
 	      <input type="password" placeholder="Password" id="Password" class="form-control">
 	    </div>
-	    <button type="submit" class="btn btn-success">Sign in</button>
+	    <button type="submit" class="btn btn-success">Sign in</button>-->
+
+	    <button type="button" class="btn btn-success" onClick="window.location.href='{{url_for('login', e=' ')}}'">Sign in</button>
 	    <button type="button" class="btn btn-default" onClick="window.location.href='{{url_for('register')}}'">Register</button>
 	  </form>
 	  
@@ -105,6 +107,9 @@
                 <li><a href="{{url_for('changepic')}}">
 		    <span class="glyphicon glyphicon-cog"> Change Profile Pic</span></a>
 		  </li>
+		<li><a href="{{url_for('upload')}}">
+		    <span class="glyphicon glyphicon-cog"> Upload Pic</span></a>
+		</li>
                 <li class="divider"></li>
                 <li><a href="{{url_for('logout')}}">Logout</a></li>
               </ul>
@@ -123,7 +128,8 @@
     <!-- Bootstrap core JavaScript
          ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> 
+    <!--<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
+    <script src="../static/jquery/src/jquery.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
 
