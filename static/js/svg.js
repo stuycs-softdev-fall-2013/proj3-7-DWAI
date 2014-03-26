@@ -10,27 +10,32 @@ var draw = function(){
     pen.setAttribute('fill','#FFFFFF');
     s.appendChild(pen);
     var penDown = false;
-    var oldMidPtX,oldMidPtY,oldPtX,oldPtY,midptX,midptY;
+    var cpath;
+    var oldMidPtX,oldMidPtY,midPtX,midPtY;
+    var cpathid = 0;
 
+    var drawPath = function(d){
+	var p = document.createElementNS(namespace,'path');
+	p.setAttribute('id','path' + cpathid);
+	p.setAttribute('d',d);
+	p.setAttribute('stroke','#000000');
+	p.setAttribute('fill','transparent');
+	p.setAttribute('stroke-width',20);
+	p.setAttribute('stroke-linecap','round');
+	s.appendChild(p);	
+    };
     var movePen = function(e){
 	pen.setAttribute('cx',e.offsetX);
 	pen.setAttribute('cy',e.offsetY);
 	if(penDown){
-	    midptX = oldMidPtX + e.offsetX>>1;
-	    midptY = oldMidPtY + e.offsetY>>1;
-	    var p = document.createElementNS(namespace,'path');
-	    var path = 'M ' + oldPtX + ' ' + oldPtY + ' T ' + oldMidPtX + ' ' + oldMidPtY + ' ' + midptX + ' ' + midptY;
-	    console.log(path);
-	    p.setAttribute('d',path);
-	    p.setAttribute('stroke','#000000');
-	    p.setAttribute('fill','none');
-	    p.setAttribute('stroke-width',40);
-	    p.setAttribute('stroke-linecap','butt');
-	    s.appendChild(p);
-	    oldMidPtX = midptX;
-	    oldMidPtY = midptY;
-	    oldPtX = e.offsetX;
-	    oldPtY = e.offsetY;
+	    //s.removeChild('#path'+cpathid);
+	    midPtX = e.offsetX;
+	    midPtY = e.offsetY;
+	    cpath = cpath + 'Q ' + (oldMidPtX + e.offsetX>>1) + ' ' + (oldMidPtY + e.offsetY>>1) + ' ' + midPtX + ' ' + midPtY + ' ';
+	    
+	    console.log(cpath);
+	    oldMidPtX = midPtX;
+	    oldMidPtY = midPtY;
 	}
     }
     s.addEventListener('mousemove',movePen);
@@ -38,8 +43,12 @@ var draw = function(){
 	penDown = true;
 	oldMidPtX = e.offsetX;
 	oldMidPtY = e.offsetY;
-	oldPtX = e.offsetX;
-	oldPtY = e.offsetY;
+	cpath = 'M ' + oldMidPtX + ' ' + oldMidPtY + ' ';
+	drawPath(cpath);
     });
-    s.addEventListener('mouseup',function(){penDown = false;});
+    s.addEventListener('mouseup',function(){
+	penDown = false;
+	drawPath(cpath);
+	cpathid++;
+    });
 }();
