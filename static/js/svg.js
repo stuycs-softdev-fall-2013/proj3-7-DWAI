@@ -10,10 +10,10 @@ var draw = function(){
     pen.setAttribute('fill','#FFFFFF');
     s.appendChild(pen);
     var penDown = false;
-    var cpath;
+    var currPath;
     var oldMidPtX,oldMidPtY,midPtX,midPtY;
     var cpathid = 0;
-
+    var undoStack = [],redoStack = [];
     var drawPath = function(d){
 	var p = document.createElementNS(namespace,'path');
 	p.setAttribute('id','path' + cpathid);
@@ -28,15 +28,25 @@ var draw = function(){
 	pen.setAttribute('cx',e.offsetX);
 	pen.setAttribute('cy',e.offsetY);
 	if(penDown){
-	    //s.removeChild('#path'+cpathid);
+	    currPath = document.getElementById('path' + cpathid);
 	    midPtX = e.offsetX;
 	    midPtY = e.offsetY;
-	    cpath = cpath + 'Q ' + (oldMidPtX + e.offsetX>>1) + ' ' + (oldMidPtY + e.offsetY>>1) + ' ' + midPtX + ' ' + midPtY + ' ';
+	    currPath.setAttribute('d',currPath.getAttribute('d') + ' Q ' + (oldMidPtX + e.offsetX>>1) + ' ' + (oldMidPtY + e.offsetY>>1) + ' ' + midPtX + ' ' + midPtY + ' ');
 	    
-	    console.log(cpath);
 	    oldMidPtX = midPtX;
 	    oldMidPtY = midPtY;
 	}
+    }
+    var undo = function(){
+	currPath = document.getElementById('path'+(cpathid-1));
+	console.log(cpathid);
+	undoStack.push(currPath);
+	console.log(undoStack);
+	s.removeChild(currPath);
+	cpathid--;	
+    }
+    var redo = function(){
+	
     }
     s.addEventListener('mousemove',movePen);
     s.addEventListener('mousedown',function(e){
@@ -48,7 +58,10 @@ var draw = function(){
     });
     s.addEventListener('mouseup',function(){
 	penDown = false;
-	drawPath(cpath);
 	cpathid++;
     });
+    return {
+	undo: undo,
+	redo: redo
+    };
 }();
