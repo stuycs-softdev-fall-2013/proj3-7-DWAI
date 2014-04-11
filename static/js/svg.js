@@ -13,7 +13,7 @@ var draw = function(){
     var currPath;
     var oldMidPtX,oldMidPtY,midPtX,midPtY;
     var cpathid = 0;
-    var undoStack = [],redoStack = [];
+    var redoStack = [];
     var drawPath = function(d){
 	var p = document.createElementNS(namespace,'path');
 	p.setAttribute('id','path' + cpathid);
@@ -38,15 +38,19 @@ var draw = function(){
 	}
     }
     var undo = function(){
-	currPath = document.getElementById('path'+(cpathid-1));
-	console.log(cpathid);
-	undoStack.push(currPath);
-	console.log(undoStack);
-	s.removeChild(currPath);
-	cpathid--;	
+	if(cpathid > 0){
+	    currPath = document.getElementById('path'+(cpathid-1));
+	    redoStack.push(currPath);
+	    s.removeChild(currPath);
+	    cpathid--;
+	}
     }
     var redo = function(){
-	
+	currPath = redoStack.pop();
+	if(currPath != null){
+	    s.appendChild(currPath);
+	    cpathid++;
+	}
     }
     s.addEventListener('mousemove',movePen);
     s.addEventListener('mousedown',function(e){
