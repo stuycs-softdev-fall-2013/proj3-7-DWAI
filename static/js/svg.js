@@ -5,7 +5,7 @@ var draw = function(){
     pen.setAttribute('id','pen');
     pen.setAttribute('cx',0);
     pen.setAttribute('cy',0);
-    pen.setAttribute('r',20);
+    pen.setAttribute('r',30);
     pen.setAttribute('stroke','#000000');
     pen.setAttribute('fill','#FFFFFF');
     s.appendChild(pen);
@@ -14,13 +14,14 @@ var draw = function(){
     var oldMidPtX,oldMidPtY,midPtX,midPtY;
     var cpathid = 0;
     var redoStack = [];
+    var data;
     var drawPath = function(d){
 	var p = document.createElementNS(namespace,'path');
 	p.setAttribute('id','path' + cpathid);
 	p.setAttribute('d',d);
 	p.setAttribute('stroke','#000000');
 	p.setAttribute('fill','transparent');
-	p.setAttribute('stroke-width',20);
+	p.setAttribute('stroke-width',2*pen.getAttribute('r'));
 	p.setAttribute('stroke-linecap','round');
 	s.appendChild(p);	
     };
@@ -64,8 +65,12 @@ var draw = function(){
 	penDown = false;
 	cpathid++;
     });
+    var save = function(){
+	console.log(s);
+    }
     return {
 	undo: undo,
-	redo: redo
+	redo: redo,
+	save: save
     };
 }();
