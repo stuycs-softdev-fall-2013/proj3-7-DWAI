@@ -66,7 +66,7 @@ var draw = function(){
 	cpathid++;
     });
     var save = function(){
-	console.log(s);
+	return s.innerHTML;
     }
     return {
 	undo: undo,
