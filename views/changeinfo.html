@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1>Account Settings</h1>
+
+<br>
+
+<form method="POST" class="form" role="form">
+  <h3>Please enter your current password to make any changes.</h3>
+ 
+  <div class="form-group">
+    <label for="oldpw" class="col-sm-2 control-label">Current password</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" name="oldpw" placeholder="Current password">
+    </div>
+  </div>
+
+  <br><br>
+  {% if error %}
+  <div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{error}}
+  </div>
+  {% endif %}
+
+  <h3>Make your changes:</h3>
+  
+  {% if usererror %}
+  <div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{usererror}}
+  </div>
+  {% endif %}
+
+  {% if usersuccess %}
+  <div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{usersuccess}}
+  </div>
+  {% endif %}
+     
+  <div class="bs-example"> 
+    
+    <div class="form-group">
+      <label for="newuser" class="col-sm-2 control-label">Change username</label>
+	<div class="col-sm-6">
+	  <input type="text" class="form-control" name="newuser" placeholder="New username">
+	</div>
+      </div>
+
+    <br>
+    <br>
+    <br>
+
+      {% if passerror %}
+      <div class="alert alert-danger alert-dismissible">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{passerror}}
+      </div>
+      {% endif %}
+      {% if pwsuccess %}
+      <div class="alert alert-success alert-dismissible">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{pwsuccess}}
+      </div>
+      {% endif %}
+
+      <div class="form-group">
+	<label for="newpw" class="col-sm-2 control-label">Change password</label>
+	<div class="col-sm-6">
+	  <input type="password" class="form-control" name="newpw" placeholder="New password">
+	</div>
+      </div>
+    
+<br><br>        
+      <div class="form-group">
+	<label for="confirm"  class="col-sm-2 control-label">Confirm password</label>
+	<div class="col-sm-6">
+	  <input type="password" name="confirm" class="form-control" placeholder="Confirm new password">
+	</div>
+      </div>
+      
+<br><br>
+
+      <div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+	  <input type="submit" class="btn btn-primary" name="button" value="Submit">
+	</div>
+      </div>
+  </div>
+</form>
+
+{% endblock %}
+
