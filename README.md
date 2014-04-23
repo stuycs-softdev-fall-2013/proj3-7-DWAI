@@ -21,7 +21,7 @@ For future prospects, we plan on implementing chat and view/edit settings as wel
 5. think about new animations and site navigation that will make the site more interactive and interesting
 
 ###Vacation Plans
-Alvin:  getting undo/redo working in svg, saving working using node.js, eraser and other pens
-Michele: rewrite app.py using node.js
-Judy:
-Vivian: ???
+- Alvin:  getting undo/redo working in svg, saving working using node.js, eraser and other pens
+- Michele: rewrite app.py using node.js
+- Judy: redesign site
+- Vivian: ???
