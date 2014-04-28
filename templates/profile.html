@@ -100,10 +100,12 @@ Name:<br>
         </a>
       </div>
     </div><!-- /example -->
-    <h1>
-  </div>
- 
-</div>
+
+<h1>
+{% if propic %}
+<img src="{{ url_for('serve_image', image_id=propic._id) }}" width = "140" height="140" class="img-rounded">
+{% endif %}
+{{owner}}'s Profile</h1>
 <!--
     <div class="form-group">
       <label for="file">Add profile picture</label>

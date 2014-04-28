@@ -19,28 +19,38 @@ def home():
 
 @app.route('/<e>', methods = ['GET', 'POST'])
 def homepage(e):
+    if request.method == "POST":
+        width = request.form["cwidth"].encode("utf8")
+        height = request.form["cheight"].encode("utf8")
+        print width
+        print height
+        return redirect (url_for('canvas', w=width, h=height))
     if e == ' ':
         error=None
     else:
         error = e
-    if request.method == 'POST':
-        username = request.form['Username'].encode("utf8")
-        password = request.form['Password'].encode("utf8")
-        if u.authenticate(username=username,password=password):
-            session['username'] = username
-            return render_template('index.html', user = username)
-        else:
-            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
-    #pics = img.get_by_date
-    #art = []
-    #for im in pics:
-    #    art.append(im.image)
-    #pics = art[:3]
+        
+        #    if request.method == 'POST':
+        #        username = request.form['Username'].encode("utf8")
+        #        password = request.form['Password'].encode("utf8")
+        #        if u.authenticate(username=username,password=password):
+        #            session['username'] = username
+        #            return render_template('index.html', user = username)
+        #        else:
+        #            return redirect(url_for('login.html', e = 'Invalid username and password combination'))
+            
+        #pics = img.get_by_date
+        #art = []
+        #for im in pics:
+        #    art.append(im.image)
+        #pics = art[:3]
+        
     if not 'username' in session:
-        return render_template('index.html', user=None, error=error) #pics=pics)
+            return render_template('index.html', user=None, error=error) #pics=pics)
     else:
-        user = session['username']
-        return render_template('index.html', user=user, error=error) #pics=pics)
+            user = session['username']
+            
+    return render_template('index.html', user=user, error=error) #pics=pics)
     
 
 @app.route('/register',methods=['GET','POST'])
@@ -57,6 +67,7 @@ def register():
     u.insert(username=request.form['username'], password=request.form['password'])
     return redirect(url_for('home'))
 
+
 @app.route('/login/<e>',methods=['GET','POST'])
 def login(e):
     if e == ' ':
@@ -64,7 +75,7 @@ def login(e):
     else:
         error = e
     if 'username' in session:
-        return redirect(url_for('homepage',e='You area already logged in'))
+        return redirect(url_for('homepage',e='You are already logged in'))
     if request.method == 'GET':
         return render_template('login.html', error=error)
     if not u.authenticate(request.form['username'],request.form['password']):
@@ -111,6 +122,7 @@ def changeinfo():
         error = 'Incorrect password'
     return render_template('changeinfo.html', user=session['username'],error=error, usererror=usererror, passerror=passerror, usersuccess=usersuccess, pwsuccess=pwsuccess)
 
+
 @app.route('/me')
 def me():
     #show the user profile for that user
@@ -124,6 +136,7 @@ def me():
             return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
     else:
         return redirect(url_for('login',e='Please log in to access the page'))
+
 
 @app.route('/profile/<name>')
 def profile(name):
@@ -142,17 +155,21 @@ def profile(name):
     else:
         return redirect(url_for('homepage',e='User does not exist'))
 
+
 @app.route('/canvas', methods=['GET','POST'])
-def canvas():
+def canvas(w=1000, h=500):
     if 'username' in session:
         #Don't know if this works
         if request.method == 'POST':
+            print "TRYING TO GET JSON DATA"
             requestimg = json.load(sys.stdin)
             i = img.insert(user=session['username'],title=request.form['title'])
             i.change_image(requestimg)
-        return render_template('canvaspg.html', user=session['username'])
+            return redirect(url_for("me"))
+        return render_template('canvaspg.html', user=session['username'], w=str(w), h=str(h))
     else:
         return redirect(url_for('login',e='Please log in to access page'))
+
 
 @app.route('/changepic', methods=['GET','POST'])
 def changepic():
@@ -166,6 +183,7 @@ def changepic():
         x.change_propic(f)
         return redirect(url_for('me'))
 
+
 @app.route('/upload',methods=['GET','POST'])
 def upload():
     if 'username' not in session:
@@ -178,6 +196,7 @@ def upload():
         x.change_image(f)
         return redirect(url_for('me'))
 
+
 @app.route('/image/<user>/<title>')
 def imagepg(user,title):
     pic = img.find_one(user=user,title=title)
@@ -185,12 +204,14 @@ def imagepg(user,title):
         return render_template('imagepg.html', pic=pic)
     return redirect(url_for('homepage',e="Page does not exist"))
 
+
 @app.route('/_image/<image_id>')
 def serve_image(image_id):
     image = models.fs.get(ObjectId(image_id))
     data = image.read()
     image.close()
     return data
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

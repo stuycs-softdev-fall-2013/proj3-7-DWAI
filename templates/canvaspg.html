@@ -49,8 +49,9 @@
 	      <input type="color" id="pencolor" name="pencolor">
 
 	      <label type="text" id="penslide">Pen size: </label>
-	      <input id="pensizer" type="range" name="pensize" min="1" max="100" value="50">
+	      <input id="pensizer" type="range" name="pensize" min="1" max="100" value="25">
 	      
+
 	    </form>
 	  </div> <!-- navbar -->
 
@@ -60,7 +61,7 @@
 	      <button type="button" class="btn btn-success" id="save">
 	      <span class="glyphicon glyphicon-save"></span> Save
 	    </button>
-	    <button type="button" class="btn btn-danger" id="delete">
+	    <button type="button" class="btn btn-danger" id="delete" onClick="deleteCanvas()">
 	      <span class="glyphicon glyphicon-trash"></span> Delete
 	    </button>
 	    
@@ -72,12 +73,10 @@
       </div>
 
 
-
       <center>
-	<canvas id="cvs" width="width" height="height" style="border:1px solid #d3d3d3;">
+	<canvas id="cvs" width={{w}} height={{h}} style="border:1px solid #d3d3d3;">
 	  Your browser does not support the HTML5 canvas tag.</canvas>
       </center>
-
 
 
 
@@ -90,9 +89,31 @@
       <script type="text/javascript" src="../static/js/buttons.js"></script>
 
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-      <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+      <script src="../static/js/bootstrap.min.js"></script>
       
-     
+
+      <!--<p id="demo"></p>-->
+      <script>
+	function deleteCanvas()
+	{
+	var x;
+	var r=confirm("Are you sure you want to delete this canvas?");
+	if (r==true) { window.location.href="/canvas"; }
+	else { x="No I don't want to delete it!!"; }
+	<!--document.getElementById("demo").innerHTML=x;-->
+	}
+      </script>
+
+      <script>
+	function printValue() {
+	var x = document.getElementById("penslide");
+	var y = document.getElementById("pensizer");
+	x.innerHTML = "Pensize: " + y.value;
+	}
+
+	window.onload = function() { printValue(); }	
+      </script>
+      
 {% endblock %}
       
 </html>
