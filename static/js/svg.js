@@ -3,9 +3,11 @@ var draw = function(){
     var penDown,currPath,cpathid;    
     var oldMidPtX,oldMidPtY,midPtX,midPtY;
     var redoStack,data;
+    var layerList,currLay;
 
     var drawPath = function(d){
 	var p = document.createElementNS(namespace,'path');
+	p.setAttribute('class','layer' + currLay);
 	p.setAttribute('id','path' + cpathid);
 	p.setAttribute('d',d);
 	p.setAttribute('stroke','#000000');
@@ -53,6 +55,9 @@ var draw = function(){
 	penDown = false;
 	
 	cpathid = document.getElementsByTagName("path").length;
+	layerList = [1];
+	currLay = layerList.length - 1;
+
 	s.addEventListener('mousemove',function(e){
 	    pen.setAttribute('cx',e.offsetX);
 	    pen.setAttribute('cy',e.offsetY);
@@ -78,11 +83,39 @@ var draw = function(){
 	    cpathid++;
 	});	
     }
+    var newLayer = function(){
+	layerList.push(1);
+	currLay++;
+    }
+    var currLayer = function(){
+	return currLay;
+    }
+    var hideLayer = function(){
+	var strokesInLayer = document.getElementsByClassName('layer' + currLayer);
+	for(var i = 0;i < strokesInLayer.length;i++){
+	    strokesInLayer[i].style.visiblity='hidden';
+	}
+	layerList[currLayer] = !(layerList[currLayer]);
+    }
+    var showLayer = function(){
+	var strokesInLayer = document.getElementsByClassName('layer' + currLayer);
+	for(var i = 0;i < strokesInLayer.length;i++){
+	    strokesInLayer[i].style.visiblity='visible';
+	}
+	layerList[currLayer] = !(layerList[currLayer]);
+    }
+    var changeLayer = function(newLayer){
+	currLayer = newLayer - 1;
+    }
     return {
 	undo: undo,
 	redo: redo,
 	save: save,
-	load: load
+	load: load,
+	newLayer: newLayer,
+	currLayer: currLayer,
+	hideLayer: hideLayer,
+	showLayer: showLayer
     };
 }();
 draw.load();
