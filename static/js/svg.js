@@ -14,6 +14,9 @@ var draw = function(){
 	p.setAttribute('fill','transparent');
 	p.setAttribute('stroke-width',2*pen.getAttribute('r'));
 	p.setAttribute('stroke-linecap','round');
+	if(!layerList[currLayer()])
+	    p.style.visibility = 'hidden';
+	
 	s.appendChild(p);	
     };
 
@@ -55,7 +58,8 @@ var draw = function(){
 	penDown = false;
 	
 	cpathid = document.getElementsByTagName("path").length;
-	layerList = [1];
+	layerList = [true];
+	console.log(layerList);
 	currLay = layerList.length - 1;
 
 	s.addEventListener('mousemove',function(e){
@@ -84,28 +88,27 @@ var draw = function(){
 	});	
     }
     var newLayer = function(){
-	layerList.push(1);
+	layerList.push(true);
+	console.log(layerList);
 	currLay++;
     }
     var currLayer = function(){
 	return currLay;
     }
     var hideLayer = function(){
-	var strokesInLayer = document.getElementsByClassName('layer' + currLayer);
-	for(var i = 0;i < strokesInLayer.length;i++){
-	    strokesInLayer[i].style.visiblity='hidden';
-	}
-	layerList[currLayer] = !(layerList[currLayer]);
+	var strokesInLayer = document.getElementsByClassName('layer' + currLayer());
+	for(var i = 0;i < strokesInLayer.length;i++)
+	    strokesInLayer[i].style.visibility='hidden';
+	layerList[currLayer()] = false;
     }
     var showLayer = function(){
-	var strokesInLayer = document.getElementsByClassName('layer' + currLayer);
-	for(var i = 0;i < strokesInLayer.length;i++){
-	    strokesInLayer[i].style.visiblity='visible';
-	}
-	layerList[currLayer] = !(layerList[currLayer]);
+	var strokesInLayer = document.getElementsByClassName('layer' + currLayer());
+	for(var i = 0;i < strokesInLayer.length;i++)
+	    strokesInLayer[i].style.visibility='visible';
+	layerList[currLayer()] = true;
     }
     var changeLayer = function(newLayer){
-	currLayer = newLayer - 1;
+	currLay = newLayer - 1;
     }
     return {
 	undo: undo,
@@ -115,7 +118,8 @@ var draw = function(){
 	newLayer: newLayer,
 	currLayer: currLayer,
 	hideLayer: hideLayer,
-	showLayer: showLayer
+	showLayer: showLayer,
+	changeLayer: changeLayer,
     };
 }();
 draw.load();
