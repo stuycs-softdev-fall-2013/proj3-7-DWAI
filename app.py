@@ -197,13 +197,17 @@ def upload():
         return redirect(url_for('me'))
 
 
-@app.route('/image/<user>/<title>')
+@app.route('/image/<user>/<title>', methods=['GET', 'POST'])
 def imagepg(user,title):
     pic = img.find_one(user=user,title=title)
     if pic is not None:
-        return render_template('imagepg.html', pic=pic)
+        commentlist  = pic.get_comments()
+        if request.method == 'POST':
+            comment = request.form['comment']
+            if 'username' in session:
+                #adding comment
+         return render_template('imagepg.html',pic=pic, commentlist=commentlist )            
     return redirect(url_for('homepage',e="Page does not exist"))
-
 
 @app.route('/_image/<image_id>')
 def serve_image(image_id):
