@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
+    <!-- Documentation extras -->
+    <link href="http://getbootstrap.com/docs-assets/css/docs.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/docs-assets/css/pygments-manni.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<br>
+
+
+<h2>{{pic.title}}</h2>
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <a href="{{url_for('serve_image',image_id=img._id)}}"><img src="{{ url_for('serve_image', image_id=img.image._id) }}" alt="Generic placeholder thumbnail" width="400" height="300"></a>
+      <div class="caption">
+	<h3>
+	  {{descripton}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% for comment in commentlist %}
+comment
+<br>
+{% endif %}
+
+<form method="POST" class="form" role="form">
+  <div class="form-group">
+   <!-- <label for="newcomment">-->
+
+{% endfor %}
+      
+
+{% endblock %}
