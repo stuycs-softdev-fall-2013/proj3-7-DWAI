@@ -201,15 +201,14 @@ def upload():
 def imagepg(user,title):
     pic = img.find_one(user=user,title=title)
     if pic is not None:
-        commentlist  = pic.get_comments()
         if request.method == 'POST':
             comment = request.form['comment']
             if 'username' in session:
                 #adding comment
-                commentlist.add_comment(username, comment)
+                pic.add_comment(user=username, comment=comment)
             else:
-                commentlist.add_comment('NONE', comment)
-         return render_template('imagepg.html',pic=pic, commentlist=commentlist )            
+                pic.add_comment(user='NONE', comment=comment)
+         return render_template('imagepg.html',pic=pic, commentlist=pic.get_comments)            
     return redirect(url_for('homepage',e="Page does not exist"))
 
 @app.route('/_image/<image_id>')

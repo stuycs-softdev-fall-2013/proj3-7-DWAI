@@ -34,12 +34,12 @@ class ImageModel(Model):
             self.save()
             return True
         return False
-# VIV PLEASE FIX 
+    
     # Adds a comment under the users page
     def add_comment(self, user, **kwargs):
         comments = Comment()
         c = comments.insert(img_id=self.get_id(), user=user, **kwargs)
-        self.savesex()
+        self.save()
         return c
 
     # Get blog reviews made by this user, and with other arguments
