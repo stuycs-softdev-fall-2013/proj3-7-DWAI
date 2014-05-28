@@ -10,10 +10,12 @@ var draw = function(){
 	p.setAttribute('class','layer' + currLay);
 	p.setAttribute('id','path' + cpathid);
 	p.setAttribute('d',d);
-	p.setAttribute('stroke','#000000');
+	p.setAttribute('stroke',pencolor());
 	p.setAttribute('fill','transparent');
 	p.setAttribute('stroke-width',2*pen.getAttribute('r'));
+	p.setAttribute('stroke-linejoin','round');
 	p.setAttribute('stroke-linecap','round');
+	p.setAttribute('opacity',1);
 	if(!layerList[currLayer()])
 	    p.style.visibility = 'hidden';
 	
@@ -36,13 +38,14 @@ var draw = function(){
 	}
     }
     var save = function(){
-	var imgdata = s.innerHTML;
-	imgdata = imgdata.substring(imgdata.indexOf('<path'));
+	var imgdata = s.children();
+	console.log(imgdata);
+	$.post(window.location.href,{imgdata:imgdata});
 	return imgdata;
     }
     var load = function(img){
 	s = $('#svg');
-	s.innerHTML='Your browser does not support the SVG tag';
+	s.text('Your browser does not support the SVG tag');
 	
 	namespace = "http://www.w3.org/2000/svg"
 	pen = document.createElementNS(namespace,"circle");
@@ -108,6 +111,9 @@ var draw = function(){
     }
     var changeLayer = function(newLayer){
 	currLay = newLayer - 1;
+    }
+    var pencolor = function(){
+	return '#000000';
     }
     return {
 	undo: undo,
