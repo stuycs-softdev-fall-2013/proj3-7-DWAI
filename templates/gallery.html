@@ -22,6 +22,7 @@
     {% endif %}
     <br>
     <button type="button" class="btn btn-default" onClick="window.location.href='{{url_for('changeinfo')}}'">Edit Profile</button>
+    <button type="button" class="btn btn-default" onClick="window.location.href='{{url_for('changepic')}}'">Change Pic</buttton>
   </div>
 </div>
 <div class="container">
@@ -29,14 +30,30 @@
     <div class="col-lg-12">
       <h1 class="page-header">Gallery</h1>
     </div>
-    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-      <a class="thumbnail" href="#">
-	<img class="img-responsive" src="http://placehold.it/400x300">
-      </a>
-      <h4><a href="#">Title 1</a></h4>
-      <p>Last edited on March 8, 2014 1:03PM</p>
+    Images in Gallery: {{art|length}}<br>
+    Sort by: <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary btn-sm">
+	<input type="radio">Newest
+      </label>
+      <label class="btn btn-primary btn-sm">
+	<input type="radio">Oldest
+      </label>
     </div>
-
+    <br>
+    {% for img in art %}
+    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+      <a class="img-responsive img-thumbnail" href="{{url_for('imagepg',user=img.user,title=img.title)}}"><img src="{{ url_for('serve_image',image_id=img.image._id) }}" alt="Generic placeholder thumbnail" width="400" height="300"></a>
+      <!--<img class="img-responsive" src="http://placehold.it/400x300">-->
+      <h4>
+	{% if img.title %}
+	<a href="#">{{img.title}}</a>
+	{% else %}
+	<a href="#">Untitled Drawing</a>
+	{% endif %}
+      </h4>
+      <p>Last edited on {{img.datetime}}</p>
+    </div>
+    {% endfor %}
 
     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
       <a class="thumbnail" href="#">
@@ -88,6 +105,7 @@
       <h4><a href="#">Title 8</a></h4>
       <p>Last edited on March 8, 2014 1:03PM</p>
     </div>
+
 
 
   </div>    
