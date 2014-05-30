@@ -208,7 +208,7 @@ def imagepg(user,title):
                 pic.add_comment(user=username, comment=comment)
             else:
                 pic.add_comment(user='NONE', comment=comment)
-         return render_template('imagepg.html',pic=pic, commentlist=pic.get_comments)            
+        return render_template('imagepg.html',pic=pic, commentlist=pic.get_comments)            
     return redirect(url_for('homepage',e="Page does not exist"))
 
 @app.route('/_image/<image_id>')

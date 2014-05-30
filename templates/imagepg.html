@@ -14,45 +14,53 @@
 <br>
 
 <center>
-<h2>{{pic.title}}</h2>
-<a href="{{ url_for('user')}}"<{{user}}</a>
-<div class="row">
-  <center>
-    <div class="thumbnail">
-      <a href="{{url_for('serve_image',image_id=img._id)}}"><img src="{{ url_for('serve_image', image_id=img.image._id) }}" alt="Generic placeholder thumbnail" width="400" height="300"></a>
-      <div class="caption">
-	<h3>
-	  {{description}}
-      </center>
-    </div>
-  </div>
-</div>
+  <h2>{{pic.title}}</h2>
+  
+  <div class="container">
+    <center>
+      <div class="thumbnail">
+    	<a href="{{url_for('serve_image',image_id=img._id)}}"><img src="{{ url_for('serve_image', image_id=img.image._id) }}" alt="Generic placeholder thumbnail" width="400" height="300"></a>
+      </div>
 
+      <div class="caption">
+	<h3>{{description}}</h3>
+      </div>
+    </center>
+  </div>
 </center>
+
 <div class="container">
 <h2>Comments</h2>
-{% for comment in commentlist %}
+{% for comments in commentlist %}
 <div class="col-md-6">
   <div style="border:2px solid;border-radius:5px;padding-top:5px;padding-left:5px;padding-right:5px;padding-bottom:5px;">
-"{{comment}}"
+"{{comments.comment}}"
 <br>
+By
+{% if comments.user %}
+{{comments.user}}
+{% else %}
+GUEST
+{% endif %}
 <!--comment author-->
   </div>
  </div>
-{% endif %}
-
-  <form method="POST" class="form-signin" role="form">
-    <h2 class="form-signin-heading">New Comment</h2>
-  <!--  <input type="text" class="form-control" id="comment" name="comment" placeholder="Type comment here">-->
-    <textarea cols="80" rows="5" name="comment" placeholder="Type comment here"></textarea>
-    <div class="form-controls">
-      <button type="submit" name="button" class="btn btn-lg btn-primary" value="Submit">Submit</button>
-      </div>
-  </form>
-</div>
-   <!-- <label for="newcomment">-->
-
 {% endfor %}
-      
+<br>
+<br>
+<br>
+<form method="POST" class="form-signin" role="form">
+  <h2 class="form-signin-heading">New Comment</h2>
+  <!--  <input type="text" class="form-control" id="comment" name="comment" placeholder="Type comment here">-->
+  <textarea cols="80" rows="5" name="comment" placeholder="Type comment here"></textarea>
+  <div class="form-controls">
+    <button type="submit" name="button" class="btn btn-lg btn-primary" value="Submit">Submit</button>
+  </div>
+</form>
+</div>
+<!-- <label for="newcomment">-->
+
+
+
 
 {% endblock %}
