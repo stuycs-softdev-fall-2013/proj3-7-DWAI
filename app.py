@@ -131,9 +131,9 @@ def me():
         x = u.find_one(username=session['username'])
         try:
             propic = x.pic
-            return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
+            return render_template('gallery.html', user = session['username'], owner = session['username'],art=art, propic = propic)
         except:
-            return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
+            return render_template('gallery.html', user = session['username'], owner = session['username'],art=art)
     else:
         return redirect(url_for('login',e='Please log in to access the page'))
 
@@ -146,12 +146,17 @@ def profile(name):
             user=session['username']
         else:
             user=None
-        x = u.find_one(username=name)
+            x = u.find_one(username=name)
         try:
             propic = x.pic
-            return render_template('profile.html', user = user, owner = name,art=art, propic = propic)
+            sort = request.form['sort']
+            if sort == 'new':
+                art.sort_by([('date',-1)], **kwargs)
+            if sort == 'old':
+                art.sort_by([('date',1)], **kwargs)
+            return render_template('gallery.html', user = user, owner = name,art=art, propic = propic)
         except:
-            return render_template('profile.html', user = user, owner = name,art=art)
+            return render_template('gallery.html', user = user, owner = name,art=art)
     else:
         return redirect(url_for('homepage',e='User does not exist'))
 
