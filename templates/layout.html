@@ -65,6 +65,9 @@
             <li><a href="{{url_for('home')}}">
 		<span class="glyphicon glyphicon-home"> Home</span></a>
 	    </li>
+	    <li><a href="{{url_for('about')}}">
+		<span class="glyphicon glyphicon-home"> About</span></a>
+	    </li>
 	    <li><a href="{{url_for('canvas', width=1000, height=500)}}">
 		<span class="glyphicon glyphicon-pencil"> Canvas</span></a>
 	    </li>
@@ -109,8 +112,11 @@
 		<li><a href="{{url_for('me')}}">
 		    <span class="glyphicon glyphicon-user"> Profile</span></a>
 		</li> 
+		<li><a href="{{url_for('gallery')}}">
+		    <span class="glyphicon glyphicon-user"> Gallery</span></a>
+		</li>
                 <li><a href="{{url_for('changeinfo')}}">
-		    <span class="glyphicon glyphicon-cog"> Settings</span></a>
+		    <span class="glyphicon glyphicon-cog"> Account Settings</span></a>
                 </li>
                 <li><a href="{{url_for('changepic')}}">
 		    <span class="glyphicon glyphicon-cog"> Change Profile Pic</span></a>
