@@ -52,7 +52,7 @@ var draw = function(){
 	pen.setAttribute('id','pen');
 	pen.setAttribute('cx',0);
 	pen.setAttribute('cy',0);
-	pen.setAttribute('r',30);
+	pen.setAttribute('r', pensize());
 	pen.setAttribute('stroke','#000000');
 	pen.setAttribute('fill','#FFFFFF');
 	s.append(pen);
@@ -68,6 +68,7 @@ var draw = function(){
 	s.mousemove(function(e){
 	    pen.setAttribute('cx',e.offsetX);
 	    pen.setAttribute('cy',e.offsetY);
+	    pen.setAttribute('r',pensize());
 	    if(penDown){
 		currPath = $('#path' + cpathid);
 		midPtX = e.offsetX;
@@ -113,8 +114,15 @@ var draw = function(){
 	currLay = newLayer - 1;
     }
     var pencolor = function(){
-	return '#000000';
+	return $('#pencolor').prop('value');
     }
+
+    var pensize = function(){
+	var penwidth = $('#pensizer').prop('value');
+	$('#penslider').attr('innerHTML','Pensize: ' + penwidth);
+	return penwidth;
+    }
+
     return {
 	undo: undo,
 	redo: redo,
@@ -124,7 +132,9 @@ var draw = function(){
 	currLayer: currLayer,
 	hideLayer: hideLayer,
 	showLayer: showLayer,
-	changeLayer: changeLayer
+	changeLayer: changeLayer,
+	pencolor: pencolor,
+	pensize: pensize
     };
 }();
 draw.load();
