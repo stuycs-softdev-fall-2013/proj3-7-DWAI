@@ -131,9 +131,9 @@ def me():
         x = u.find_one(username=session['username'])
         try:
             propic = x.pic
-            return render_template('profile.html', user = session['username'], owner = session['username'],art=art, propic = propic)
+            return render_template('gallery.html', user = session['username'], owner = session['username'],art=art, propic = propic)
         except:
-            return render_template('profile.html', user = session['username'], owner = session['username'],art=art)
+            return render_template('gallery.html', user = session['username'], owner = session['username'],art=art)
     else:
         return redirect(url_for('login',e='Please log in to access the page'))
 
@@ -146,12 +146,17 @@ def profile(name):
             user=session['username']
         else:
             user=None
-        x = u.find_one(username=name)
+            x = u.find_one(username=name)
         try:
             propic = x.pic
-            return render_template('profile.html', user = user, owner = name,art=art, propic = propic)
+            sort = request.form['sort']
+            if sort == 'new':
+                art.sort_by([('date',-1)], **kwargs)
+            if sort == 'old':
+                art.sort_by([('date',1)], **kwargs)
+            return render_template('gallery.html', user = user, owner = name,art=art, propic = propic)
         except:
-            return render_template('profile.html', user = user, owner = name,art=art)
+            return render_template('gallery.html', user = user, owner = name,art=art)
     else:
         return redirect(url_for('homepage',e='User does not exist'))
 
@@ -197,13 +202,19 @@ def upload():
         return redirect(url_for('me'))
 
 
-@app.route('/image/<user>/<title>')
+@app.route('/image/<user>/<title>', methods=['GET', 'POST'])
 def imagepg(user,title):
     pic = img.find_one(user=user,title=title)
     if pic is not None:
-        return render_template('imagepg.html', pic=pic)
+        if request.method == 'POST':
+            comment = request.form['comment']
+            if 'username' in session:
+                #adding comment
+                pic.add_comment(user=username, comment=comment)
+            else:
+                pic.add_comment(user='NONE', comment=comment)
+        return render_template('imagepg.html',pic=pic, commentlist=pic.get_comments)            
     return redirect(url_for('homepage',e="Page does not exist"))
-
 
 @app.route('/_image/<image_id>')
 def serve_image(image_id):

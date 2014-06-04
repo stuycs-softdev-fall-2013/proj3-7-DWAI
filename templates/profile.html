@@ -13,9 +13,31 @@
 {% block body %}
 <br>
 
-<div class="jumbotron">
+<div class="row">
+  <div class="col-md-6">
+    <div style="background-color:#80E6FF;padding-top:25px;padding-left:25px;padding-right:25px;padding-bottom:25px;border:3px solid;border-color:#8F8F8F;border-radius:25px;">
+      <h1><center>
+      {% if propic %}
+      <img src="{{ url_for('serve_image', image_id=propic._id) }}" width = "140" height="140" class="img-rounded">
+      {% else %}
+       <img src="../static/defaultpic.jpg" width = "140" height ="140" class="img-rounded">
+      {% endif %}
+  
+   
+    
+    {{owner}} 's Profile</h1></center>
+<br>
+Images in Gallery: {{art|length}}<br>
+Contact info:<br>
+Name:<br>
 
-   <div style="float:right;">
+
+<br>
+</div>
+</div>
+
+<div class="col-md-6">
+    <div style="float:right;">
       <div id="carousel-example-captions" class="carousel slide container"  data-ride="carousel" style="width :400px;">
         <ol class="carousel-indicators">
           <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
@@ -24,17 +46,17 @@
         </ol>
         <div class="carousel-inner">
 	  
-         
+          
 	  <div class="item active">         
 	    <div class=image-item>
-	     
+	      
 	      {% if art|length > 0 %}         
 	      <img src="{{ url_for('serve_image', image_id=art[0].image._id) }}" width="400" height="300">
 	      {% else %}
 	      <img data-src="holder.js/400x150/auto/#666:#666" alt="Second slide image">
 	      
- {% endif %}
-            
+	      {% endif %}
+              
               <div class="carousel-caption">
 		
 		<h4>{{owner}}'s</h4>
@@ -68,7 +90,7 @@
 	    </div>
           </div>           
 	  {% endif %}
-       
+	  
 	</div>
         <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
           <span class="glyphicon glyphicon-chevron-left"></span>
@@ -78,44 +100,49 @@
         </a>
       </div>
     </div><!-- /example -->
+
 <h1>
 {% if propic %}
 <img src="{{ url_for('serve_image', image_id=propic._id) }}" width = "140" height="140" class="img-rounded">
 {% endif %}
 {{owner}}'s Profile</h1>
 <!--
-<div class="form-group">
-  <label for="file">Add profile picture</label>
-  <input type="file" id="file" name="file" value="Choose profile pic">
-  <button type="submit" name="btn" value="Upload" class="btn btn-primary btn-sm">Upload</button>
--->
+    <div class="form-group">
+      <label for="file">Add profile picture</label>
+      <input type="file" id="file" name="file" value="Choose profile pic">
+      <button type="submit" name="btn" value="Upload" class="btn btn-primary btn-sm">Upload</button>
+      -->
 
 <!--
 <img src="..." alt="..." class="img-rounded">
 <img src="..." alt="..." class="img-circle">
 -->
-<br>
-Images in Gallery: {{art|length}}
 
-<br>
 
-</div>
+
 <br>
 <br>
 
 <h2>GALLERY</h2>
-{% for img in art %}
-
-<div class="col-sm-6 col-md-4">
-  <div class="thumbnail">
-    <a href="{{url_for('imagepg',user=img.user,title=img.title)}}"><img src="{{ url_for('serve_image', image_id=img.image._id) }}" alt="Generic placeholder thumbnail" width="400" height="300"></a>
-    <div class="caption">
-      <h3>{{img.title}}
-       <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#myModal">Full size &raquo;</a></h3>
-
-          <!-- Modal -->
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+<div class="row">
+  {% for img in art %}
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <a href="{{url_for('imagepg',user=img.user,title=img.title)}}"><img src="{{ url_for('serve_image', image_id=img.image._id) }}" alt="Generic placeholder thumbnail" width="400" height="300"></a>
+      <div class="caption">
+	<h3>
+	  <center>
+	  {% if img.title %}
+	  {{img.title}}
+	  {% else %}
+	  No Title
+	  {% endif %}
+	  </center>
+	 <br> <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#myModal">Full size &raquo;</a></h3>
+	
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -129,11 +156,14 @@ Images in Gallery: {{art|length}}
                 </div>
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-          </div><!-- /.modal -->
-
+        </div><!-- /.modal -->
+	
+      </div>
     </div>
   </div>
 </div>
+</div>
+
 {% endfor %}
       
 

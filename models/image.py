@@ -34,7 +34,7 @@ class ImageModel(Model):
             self.save()
             return True
         return False
-
+    
     # Adds a comment under the users page
     def add_comment(self, user, **kwargs):
         comments = Comment()

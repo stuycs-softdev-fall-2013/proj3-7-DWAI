@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<!-- Bootstrap core CSS -->
+<link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">  
+<!-- Custom styles for this template -->
+<link href="http://getbootstrap.com/examples/navbar/navbar.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+<br>
+<br>
+<div class="container">
+  <!-- Static navbar -->
+  <div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse">
+          <div class="nav navbar-nav">
+	    <form method="POST" class="navbar-form">
+	      <button type="button" class="btn btn-default" id="undo">
+		<span class="glyphicon glyphicon-arrow-left"></span> Undo
+	      </button>
+	      <button type="button" class="btn btn-default" id="redo">
+		<span class="glyphicon glyphicon-arrow-right"></span> Redo
+	      </button>
+              <!--
+	      <div class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+                  <li><a href="#">Canvas Size</a></li>
+                  <li><a href="#">Pen Size</a></li>
+                  <li><a href="#">Pen Color</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Brush Tools</li>
+                  <li><a href="#">Pick color</a></li>
+		</ul>
+              </div>
+	      -->
+	      
+	      <label type="text"id="color">Color: </label>
+	      <input type="color" id="pencolor" name="pencolor">
+
+	      <label type="text" id="penslide">Pen size: </label>
+	      <input id="pensizer" type="range" name="pensize" min="1" max="100" value="50">
+	      
+	    </form>
+	  </div> <!-- navbar -->
+
+	  <div class="nav navbar-nav navbar-right"> 
+	    <form method="POST" role="form" class="navbar-form">
+            
+	      <button type="button" class="btn btn-success" id="save">
+	      <span class="glyphicon glyphicon-save"></span> Save
+	    </button>
+	    <button type="button" class="btn btn-danger" id="delete">
+	      <span class="glyphicon glyphicon-trash"></span> Delete
+	    </button>
+	    
+	    </form>
+
+	  </div>
+
+        </div><!--/.nav-collapse -->
+      </div>
+
+
+
+      <center>
+	<canvas id="cvs" width="width" height="height" style="border:1px solid #d3d3d3;">
+	  Your browser does not support the HTML5 canvas tag.</canvas>
+      </center>
+
+
+
+
+      <!-- Bootstrap core JavaScript & Canvas 
+	   ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+            
+      <script type="text/javascript" src="../static/js/easeljs-0.7.1.min.js"></script>
+      <script type="text/javascript" src="../static/js/canvas.js"></script>  
+      <script type="text/javascript" src="../static/js/buttons.js"></script>
+
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+      
+     
+{% endblock %}
+      
+</html>
