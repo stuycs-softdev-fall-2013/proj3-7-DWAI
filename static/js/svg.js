@@ -119,7 +119,7 @@ var draw = function(){
 
     var pensize = function(){
 	var penwidth = $('#pensizer').prop('value');
-	$('#penslider').attr('innerHTML','Pensize: ' + penwidth);
+	$('#penslide').html('Pensize: ' + penwidth);
 	return penwidth;
     }
 
