@@ -137,6 +137,18 @@ def me():
     else:
         return redirect(url_for('login',e='Please log in to access the page'))
 
+@app.route('/gallery')
+def gallery():
+    if 'username' in session:
+        art = img.find(user=session['username'])
+        x = u.find_one(username=session['username'])
+        try:
+            propic = x.pic
+            return render_template('gallery.html', user = session['username'], owner = session['username'],art=art, propic = propic)
+        except:
+            return render_template('gallery.html', user = session['username'], owner = session['username'],art=art)
+    else:
+        return redirect(url_for('login',e='Please log in to access the page'))
 
 @app.route('/profile/<name>')
 def profile(name):
@@ -160,6 +172,12 @@ def profile(name):
     else:
         return redirect(url_for('homepage',e='User does not exist'))
 
+@app.route('/about')
+def about():
+    if 'username' in session:
+        return render_template('about.html', user = session['username'])
+    else:
+        return render_template('about.html', user = None)
 
 @app.route('/canvas', methods=['GET','POST'])
 def canvas(w=1000, h=500):

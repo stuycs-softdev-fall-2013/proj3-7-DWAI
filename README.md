@@ -20,8 +20,12 @@ For future prospects, we plan on implementing chat and view/edit settings as wel
 4. see how we can get multiple users adding in a stroke (check out the server stuff and how we will only be doing the undo/redo stuff to the user who made them, not to the entire canvas and not undoing/redoing other people's stuff.
 5. think about new animations and site navigation that will make the site more interactive and interesting
 
-###Vacation Plans
-- Alvin:  getting undo/redo working in svg, saving working using node.js, eraser and other pens
-- Michele: rewrite app.py using node.js
-- Judy: redesign site
-- Vivian: ???
+
+###Bugs I'm noticing / Things we should add
+- Quick fixes:
+   1. default canvas width is too large
+   2. pen size (add a text box to type it in), also slight lag with size-update after scrolling
+
+- Bigger errors:
+   1. Undo/redo still don't work
+   2. 
