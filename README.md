@@ -1,6 +1,8 @@
 proj3-7-DWAI
 ============
 
+###Project has been moved to https://github.com/aleung013/DWAI. Come check it out!
+
 ###Group Members:
 - Alvin Leung
 - Vivian Wang
@@ -25,7 +27,9 @@ For future prospects, we plan on implementing chat and view/edit settings as wel
 - Quick fixes:
    1. default canvas width is too large
    2. pen size (add a text box to type it in), also slight lag with size-update after scrolling
-
+   3. we should limit the canvas size such that it doesnt go over the browser
+   4. 
 - Bigger errors:
    1. Undo/redo still don't work
-   2. 
+   2. judy's profile doesn't display the same information as the judy account
+   3. 
